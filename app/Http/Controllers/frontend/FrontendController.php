@@ -24,27 +24,14 @@ class FrontendController extends Controller
 
 
 
-        $manufacture = Manufacture::Where('status', 1)->get();
         $partner = Partner::Where('status', 1)->get();
         $userWishlist = [];
         if (Auth::check()) {
             $userWishlist = Wishlist::where('user_id', Auth::id())->pluck('product_id')->toArray();
         }
 
-        $mostPurchasedProducts = OrderItem::select('product_id')
-                ->selectRaw('SUM(quantity) as total_quantity')
-                ->groupBy('product_id')
-                ->orderBy('total_quantity', 'desc')
-                ->get();
-        $mostPopularProducts = Product::whereIn('id', $mostPurchasedProducts->pluck('product_id'))
-             ->where('status', 1)
-             ->whereNotNull('available_stock')
-             ->where('available_stock', '>', 0)
-             ->latest()
-             ->limit(8)
-             ->get();
 
         $siteSetting = SiteSetting::first();
-        return view('user.dashboard',compact('newArrivalProducts','mostPopularProducts','manufacture','partner','userWishlist','siteSetting'));
+        return view('user.dashboard',compact('newArrivalProducts','partner','userWishlist','siteSetting'));
     }
 }

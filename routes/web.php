@@ -132,12 +132,6 @@ Route::middleware(['auth'])->group(function () {
         Route::put('/review-update/{id}', [ProductController::class, 'reviewStatusUpdate'])->name('admin.review.update');
 
         //manufacture
-        Route::get('/manufacture', [ManufactureController::class, 'index'])->name('admin.manufacture');
-        Route::post('/manufacture-store', [ManufactureController::class, 'store'])->name('admin.manufacture.store');
-        Route::put('/manufacture-update/{id}', [ManufactureController::class, 'update'])->name('admin.manufacture.update');
-        Route::get('/manufacture-delete/{id}', [ManufactureController::class, 'destroy'])->name('admin.manufacture.destroy');
-
-        //manufacture
         Route::get('/partner', [PartnerController::class, 'index'])->name('admin.partner');
         Route::post('/partner-store', [PartnerController::class, 'store'])->name('admin.partner.store');
         Route::put('/partner-update/{id}', [PartnerController::class, 'update'])->name('admin.partner.update');

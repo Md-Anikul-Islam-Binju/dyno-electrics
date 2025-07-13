@@ -6,7 +6,7 @@
             <div class="page-title-box">
                 <div class="page-title-right">
                     <ol class="breadcrumb m-0">
-                        <li class="breadcrumb-item"><a href="javascript: void(0);">Wings</a></li>
+                        <li class="breadcrumb-item"><a href="javascript: void(0);">Dyno Electrics</a></li>
                         <li class="breadcrumb-item"><a href="javascript: void(0);">Category</a></li>
                         <li class="breadcrumb-item active">Category!</li>
                     </ol>
@@ -28,6 +28,7 @@
                     <thead>
                     <tr>
                         <th>S/N</th>
+                        <th>Image</th>
                         <th>Name</th>
                         <th>Status</th>
                         <th>Action</th>
@@ -37,7 +38,15 @@
                     @foreach($categories as $key=>$categoriesData)
                         <tr>
                             <td>{{$key+1}}</td>
+                            <td>
+                                @if($categoriesData->image)
+                                    <img src="{{asset('images/category/'.$categoriesData->image)}}" alt="" width="50px" height="50px">
+                                @else
+                                    <span class="text-danger">No Image</span>
+                                @endif
+                            </td>
                             <td>{{$categoriesData->name}}</td>
+
                             <td>{{$categoriesData->status==1? 'Active':'Inactive'}}</td>
                             <td style="width: 100px;">
                                 <div class="d-flex justify-content-end gap-1">
@@ -47,7 +56,7 @@
                             </td>
                             <!--Edit Modal -->
                             <div class="modal fade" id="editNewModalId{{$categoriesData->id}}" data-bs-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="editNewModalLabel{{$categoriesData->id}}" aria-hidden="true">
-                                <div class="modal-dialog modal-lg modal-dialog-centered">
+                                <div class="modal-dialog modal-dialog-centered">
                                     <div class="modal-content">
                                         <div class="modal-header">
                                             <h4 class="modal-title" id="addNewModalLabel{{$categoriesData->id}}">Edit</h4>
@@ -58,14 +67,27 @@
                                                 @csrf
                                                 @method('PUT')
                                                 <div class="row">
-                                                    <div class="col-6">
+                                                    <div class="col-12">
                                                         <div class="mb-3">
                                                             <label for="name" class="form-label">Name</label>
                                                             <input type="text" id="name" name="name" value="{{$categoriesData->name}}"
                                                                    class="form-control" placeholder="Enter Name" required>
                                                         </div>
                                                     </div>
-                                                    <div class="col-6">
+
+                                                    <div class="col-12">
+                                                        <div class="mb-3">
+                                                            <label for="image" class="form-label">Image</label>
+                                                            <input type="file" id="image" name="image"
+                                                                   class="form-control" placeholder="Enter Image">
+                                                            @if($categoriesData->image)
+                                                                <img src="{{asset('images/category/'.$categoriesData->image)}}" alt="" width="50px" height="50px">
+                                                            @endif
+                                                        </div>
+                                                    </div>
+
+
+                                                    <div class="col-12">
                                                         <div class="mb-3">
                                                             <label for="example-select" class="form-label">Status</label>
                                                             <select name="status" class="form-select">
@@ -125,6 +147,14 @@
                                     <label for="name" class="form-label">Name</label>
                                     <input type="text" id="name" name="name"
                                            class="form-control" placeholder="Enter Name" required>
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <div class="mb-3">
+                                    <label for="image" class="form-label">Image</label>
+                                    <input type="file" id="image" name="image"
+                                           class="form-control" placeholder="Enter Image" required>
                                 </div>
                             </div>
                         </div>

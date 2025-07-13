@@ -5,6 +5,7 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\SubCategory;use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use Toastr;
 
 class CategoryController extends Controller
@@ -20,8 +21,12 @@ class CategoryController extends Controller
             $request->validate([
                 'name' => 'required',
             ]);
+            $file = time().'.'.$request->image->extension();
+            $request->image->move(public_path('images/category'), $file);
             $category = new Category();
             $category->name = $request->name;
+            $category->slug = Str::slug($request->name); // Changed here
+            $category->image = $file;
             $category->save();
             Toastr::success('Category Added Successfully', 'Success');
             return redirect()->back();
@@ -40,6 +45,11 @@ class CategoryController extends Controller
             $category = Category::find($id);
             $category->name = $request->name;
             $category->status = $request->status;
+            if ($request->image) {
+                $file = time() . '.' . $request->image->extension();
+                $request->image->move(public_path('images/category'), $file);
+                $category->image = $file;
+            }
             $category->save();
             Toastr::success('Category Updated Successfully', 'Success');
             return redirect()->back();

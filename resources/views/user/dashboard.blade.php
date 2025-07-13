@@ -317,21 +317,21 @@
                 <div class="category-sidebar">
                     <div class="category-item mb-3">
                     <span class="category-icon bg-yellow">
-                        <img src="https://pritesh-ecom.golamsoroar.com/images/icons/alt.png" alt="Alternator">
+                        <img src="{{URL::to('frontend/images/Alternator-Category.webp')}}" alt="Alternator">
                     </span>
                         <span class="category-label">Alternator</span>
                     </div>
                     <hr class="divider">
                     <div class="category-item mb-3">
                     <span class="category-icon bg-green">
-                        <img src="https://pritesh-ecom.golamsoroar.com/images/icons/starter.png" alt="Starter Motor">
+                        <img src="{{URL::to('frontend/images/Starter-Motor-Category.webp')}}" alt="Starter Motor">
                     </span>
                         <span class="category-label">Starter Motor</span>
                     </div>
                     <hr class="divider">
                     <div class="category-item">
                     <span class="category-icon bg-blue">
-                        <img src="https://pritesh-ecom.golamsoroar.com/images/icons/dynamo.png" alt="Dynamo">
+                        <img src="{{URL::to('frontend/images/Dynamo-Category.webp')}}" alt="Dynamo">
                     </span>
                         <span class="category-label">Dynamo</span>
                     </div>

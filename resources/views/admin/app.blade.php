@@ -118,53 +118,27 @@
                     </a>
                 </li>
 
+
                 <li class="side-nav-item">
-                    <a data-bs-toggle="collapse" href="#catPages" aria-expanded="false" aria-controls="catPages" class="side-nav-link">
-                        <i class="ri-pages-line"></i>
+                    <a href="{{route('admin.category')}}" class="side-nav-link">
+                        <i class="ri-dashboard-3-line"></i>
                         <span> Category </span>
-                        <span class="menu-arrow"></span>
                     </a>
-                    <div class="collapse" id="catPages">
-                        <ul class="side-nav-second-level">
-                            <li>
-                                <a href="{{route('admin.category')}}">Category</a>
-                            </li>
-                        </ul>
-                    </div>
                 </li>
 
                 <li class="side-nav-item">
-                    <a data-bs-toggle="collapse" href="#proPages" aria-expanded="false" aria-controls="proPages" class="side-nav-link">
-                        <i class="ri-pages-line"></i>
+                    <a href="{{route('admin.product')}}" class="side-nav-link">
+                        <i class="ri-dashboard-3-line"></i>
                         <span> Product </span>
-                        <span class="menu-arrow"></span>
-                    </a>
-                    <div class="collapse" id="proPages">
-                        <ul class="side-nav-second-level">
-                            <li>
-                                <a href="{{route('admin.size')}}">Size</a>
-                            </li>
-                            <li>
-                                <a href="{{route('admin.product')}}">Product</a>
-                            </li>
-
-                        </ul>
-                    </div>
-                </li>
-
-              <li class="side-nav-item">
-                    <a href="{{route('admin.manufacture')}}" class="side-nav-link">
-                        <i class="ri-dashboard-3-line"></i>
-                        <span> Manufacture </span>
                     </a>
                 </li>
 
-                <li class="side-nav-item">
-                    <a href="{{route('admin.partner')}}" class="side-nav-link">
-                        <i class="ri-dashboard-3-line"></i>
-                        <span> Partner </span>
-                    </a>
-                </li>
+{{--                <li class="side-nav-item">--}}
+{{--                    <a href="{{route('admin.partner')}}" class="side-nav-link">--}}
+{{--                        <i class="ri-dashboard-3-line"></i>--}}
+{{--                        <span> Partner </span>--}}
+{{--                    </a>--}}
+{{--                </li>--}}
 
 
                  <li class="side-nav-item">
