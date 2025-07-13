@@ -433,62 +433,22 @@
             <p>Explore Our Best-Selling Alternators, Starters, and Dynamos</p>
 
             <div class="row g-4">
+                @foreach($product as  $productData)
                 <div class="col-md-3">
                     <div class="product-card">
-                        <img src="https://pritesh-ecom.golamsoroar.com/images/placeholder.png" alt="DYA0110">
-                        <p class="mt-2">DYA0110</p>
-                        <button class="call-btn">Call for Price</button>
+                        @php
+                            $images = json_decode($productData->image, true);
+                            $firstImage = $images ? $images[0] : 'default.png';
+                        @endphp
+                        <img src="{{ asset('images/product/' . $firstImage) }}" alt="DYA0110">
+                        <p class="mt-2">{{$productData->name}}</p>
+                        <a href="{{route('frontend.product.details',$productData->id)}}">
+                            <button class="call-btn">Call for Price</button>
+                        </a>
+
                     </div>
                 </div>
-                <div class="col-md-3">
-                    <div class="product-card">
-                        <img src="https://pritesh-ecom.golamsoroar.com/images/placeholder.png" alt="DYA0112">
-                        <p class="mt-2">DYA0112</p>
-                        <button class="call-btn">Call for Price</button>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="product-card">
-                        <img src="https://pritesh-ecom.golamsoroar.com/images/placeholder.png" alt="DYA0113">
-                        <p class="mt-2">DYA0113</p>
-                        <button class="call-btn">Call for Price</button>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="product-card">
-                        <img src="https://pritesh-ecom.golamsoroar.com/images/placeholder.png" alt="DYA0117">
-                        <p class="mt-2">DYA0117</p>
-                        <button class="call-btn">Call for Price</button>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="product-card">
-                        <img src="https://pritesh-ecom.golamsoroar.com/images/placeholder.png" alt="DYA0118">
-                        <p class="mt-2">DYA0118</p>
-                        <button class="call-btn">Call for Price</button>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="product-card">
-                        <img src="https://pritesh-ecom.golamsoroar.com/images/placeholder.png" alt="DYA0122">
-                        <p class="mt-2">DYA0122</p>
-                        <button class="call-btn">Call for Price</button>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="product-card">
-                        <img src="https://pritesh-ecom.golamsoroar.com/images/placeholder.png" alt="DYA0123">
-                        <p class="mt-2">DYA0123</p>
-                        <button class="call-btn">Call for Price</button>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="product-card">
-                        <img src="https://pritesh-ecom.golamsoroar.com/images/placeholder.png" alt="DYA0127">
-                        <p class="mt-2">DYA0127</p>
-                        <button class="call-btn">Call for Price</button>
-                    </div>
-                </div>
+                @endforeach
             </div>
         </div>
 

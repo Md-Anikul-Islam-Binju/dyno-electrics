@@ -151,12 +151,11 @@
                         <th>S/N</th>
                         <th>Image</th>
                         <th>Name</th>
-                        <th>Amount</th>
-                        <th>Discount Amount</th>
+                        <th>Price</th>
+                        <th>Sale Price</th>
                         <th>Stock</th>
                         <th>Available Stock</th>
                         <th>Stock Sell</th>
-                        <th>Delivery Charge</th>
                         <th>Status</th>
                         <th>Action</th>
                     </tr>
@@ -173,13 +172,12 @@
                                 <img src="{{ asset('images/product/' . $firstImage) }}" alt="Product Image" style="max-width: 50px;">
                             </td>
                             <td>{{$productData->name}}</td>
-                            <td>{{$productData->amount? $productData->amount :'N/A'}}</td>
-                            <td>{{$productData->discount_amount? $productData->discount_amount :'N/A'}}</td>
+                            <td>{{$productData->price? $productData->price :'N/A'}}</td>
+                            <td>{{$productData->sale_price? $productData->sale_price :'N/A'}}</td>
 
                             <td>{{$productData->stock}}</td>
                             <td>{{$productData->available_stock? $productData->available_stock :'N/A'}}</td>
                             <td>{{$productData->stock_sell? $productData->stock_sell :'N/A'}}</td>
-                            <td>{{$productData->delivery_charge==1? 'Free':'Not Free'}}</td>
                             <td>{{$productData->status==1? 'Active':'Inactive'}}</td>
                             <td style="width: 100px;">
                                 <div class="d-flex justify-content-end gap-1">
@@ -212,21 +210,8 @@
                                                           </select>
                                                       </div>
                                                   </div>
+
                                                   <div class="col-6">
-                                                      <div class="mb-3">
-                                                          <label for="sub-category-select-{{$productData->id}}" class="form-label">Sub Category</label>
-                                                          <select name="sub_category_id" id="sub-category-select-{{$productData->id}}" class="form-select">
-                                                              <option value="">Select Sub Category</option>
-                                                              <!-- Sub categories will be dynamically loaded here -->
-                                                              @foreach($productData->subCategories as $subCategory)
-                                                              <option value="{{ $subCategory->id }}" {{ $productData->sub_category_id == $subCategory->id ? 'selected' : '' }}>
-                                                                  {{ $subCategory->name }}
-                                                              </option>
-                                                              @endforeach
-                                                          </select>
-                                                      </div>
-                                                  </div>
-                                                  <div class="col-12">
                                                       <div class="mb-3">
                                                           <label for="name" class="form-label">Name</label>
                                                           <input type="text" id="name" name="name" value="{{ $productData->name }}"
@@ -237,46 +222,22 @@
                                                 <div class="row">
                                                     <div class="col-6">
                                                         <div class="mb-3">
-                                                            <label for="example-fileinput" class="form-label">Amount</label>
-                                                            <input type="text" name="amount" id="amount" class="form-control" value="{{$productData->amount}}"
-                                                                   placeholder="Enter Amount" required>
+                                                            <label for="example-fileinput" class="form-label">Price</label>
+                                                            <input type="text" name="price" id="price" class="form-control" value="{{$productData->price}}"
+                                                                   placeholder="Enter Price" required>
                                                         </div>
                                                     </div>
                                                     <div class="col-6">
                                                         <div class="mb-3">
-                                                            <label for="example-fileinput" class="form-label">Discount Amount</label>
-                                                            <input type="text" id="discount_amount" name="discount_amount" value="{{$productData->discount_amount}}"
-                                                                   class="form-control" placeholder="Enter Discount Amount">
+                                                            <label for="example-fileinput" class="form-label">Sale Price</label>
+                                                            <input type="text" id="sale_price" name="sale_price" value="{{$productData->sale_price}}"
+                                                                   class="form-control" placeholder="Enter Sale Price">
                                                         </div>
                                                     </div>
                                                 </div>
 
-                                                  <div class="row">
-                                                      <div class="col-12">
-                                                          <div class="mb-3 u-tagsinput">
-                                                              <label for="example-fileinput" class="form-label">Product Tags</label>
-                                                              <input type="text" name="tags" class="form-control" value="{{ is_array(json_decode($productData->tags, true)) ? implode(',', json_decode($productData->tags, true)) : '' }}" data-role="tagsinput">
-                                                          </div>
-                                                      </div>
-                                                  </div>
 
                                                 <div class="row">
-                                                    <div class="col-6">
-                                                        <div class="mb-3">
-                                                            <label for="example-textarea" class="form-label">Choose Size</label>
-                                                            <select name="size_id[]" class="select2 form-control select2-multiple" data-toggle="select2" multiple="multiple" data-placeholder="Select Size ...">
-                                                                @foreach($sizes as $sizeData)
-                                                                    <option value="{{ $sizeData->id }}" {{ in_array($sizeData->size, $productData->sizes ?? []) ? 'selected' : '' }}>
-                                                                        {{ $sizeData->size }}
-                                                                    </option>
-                                                                @endforeach
-                                                            </select>
-                                                        </div>
-                                                    </div>
-
-
-
-
                                                     <div class="col-6">
                                                         <div class="mb-3">
                                                             <label for="example-fileinput" class="form-label">Stock</label>
@@ -284,6 +245,16 @@
                                                                    class="form-control" placeholder="Enter Stock">
                                                         </div>
                                                     </div>
+                                                    <div class="col-6">
+                                                        <div class="mb-3">
+                                                            <label for="example-select" class="form-label">Status</label>
+                                                            <select name="status" class="form-select">
+                                                                <option value="1" {{ $productData->status === 1 ? 'selected' : '' }}>Active</option>
+                                                                <option value="0" {{ $productData->status === 0 ? 'selected' : '' }}>Inactive</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-12">
@@ -316,64 +287,8 @@
                                                     </div>
                                                 </div>
 
-                                                <div class="row">
-                                                    <div class="col-6">
-                                                        <div class="mb-3">
-                                                            <label for="example-select" class="form-label">is Related</label>
-                                                            <select name="is_related" class="form-select">
-                                                                <option value="1" {{ $productData->is_related === 1 ? 'selected' : '' }}>Yes</option>
-                                                                <option value="0" {{ $productData->is_related === 0 ? 'selected' : '' }}>No</option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-6">
-                                                        <div class="mb-3">
-                                                            <label for="example-select" class="form-label">is New Arrival</label>
-                                                            <select name="is_new_arrival" class="form-select">
-                                                                <option value="1" {{ $productData->is_new_arrival === 1 ? 'selected' : '' }}>Yes</option>
-                                                                <option value="0" {{ $productData->is_new_arrival === 0 ? 'selected' : '' }}>No</option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-6">
-                                                        <div class="mb-3">
-                                                            <label for="example-select" class="form-label">is Popular</label>
-                                                            <select name="is_popular" class="form-select">
-                                                                <option value="1" {{ $productData->is_popular === 1 ? 'selected' : '' }}>Yes</option>
-                                                                <option value="0" {{ $productData->is_popular === 0 ? 'selected' : '' }}>No</option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-6">
-                                                        <div class="mb-3">
-                                                            <label for="example-select" class="form-label">Status</label>
-                                                            <select name="status" class="form-select">
-                                                                <option value="1" {{ $productData->status === 1 ? 'selected' : '' }}>Active</option>
-                                                                <option value="0" {{ $productData->status === 0 ? 'selected' : '' }}>Inactive</option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="col-6">
-                                                        <div class="mb-3">
-                                                            <label for="example-fileinput" class="form-label">Serial No</label>
-                                                            <input type="number" id="serial_no" name="serial_no" value="{{$productData->serial_no}}"
-                                                                   class="form-control" placeholder="Enter Serial No">
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="col-6">
-                                                        <div class="mb-3">
-                                                            <label for="example-select" class="form-label">Delivery Charge</label>
-                                                            <select name="delivery_charge" class="form-select">
-                                                                <option value="1" {{ $productData->delivery_charge === 1 ? 'selected' : '' }}>Free</option>
-                                                                <option value="0" {{ $productData->delivery_charge === 0 ? 'selected' : '' }}>Not Free</option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
 
 
-                                                </div>
 
 
                                                 <div class="d-flex justify-content-end">
@@ -432,17 +347,8 @@
                                    </select>
                                </div>
                            </div>
-                           <div class="col-6">
-                               <div class="mb-3">
-                                   <label for="sub-category-select" class="form-label">Sub Category</label>
-                                   <select name="sub_category_id" id="sub-category-select" class="form-select">
-                                       <option value="">Select Sub Category</option>
-                                       <!-- Sub categories will be dynamically loaded here -->
-                                   </select>
-                               </div>
-                           </div>
 
-                            <div class="col-12">
+                            <div class="col-6">
                                 <div class="mb-3">
                                     <label for="name" class="form-label">Name</label>
                                     <input type="text" id="name" name="name"
@@ -453,42 +359,23 @@
                         <div class="row">
                             <div class="col-6">
                                 <div class="mb-3">
-                                    <label for="example-fileinput" class="form-label">Amount</label>
-                                    <input type="text" name="amount" id="amount" class="form-control"
-                                           placeholder="Enter Amount" required>
+                                    <label for="example-fileinput" class="form-label">Price</label>
+                                    <input type="text" name="price" id="price" class="form-control"
+                                           placeholder="Enter price" required>
                                 </div>
                             </div>
                             <div class="col-6">
                                 <div class="mb-3">
-                                    <label for="example-fileinput" class="form-label">Discount Amount</label>
-                                    <input type="text" id="discount_amount" name="discount_amount"
-                                           class="form-control" placeholder="Enter Discount Amount">
+                                    <label for="example-fileinput" class="form-label">Sale Price</label>
+                                    <input type="text" id="sale_price" name="sale_price"
+                                           class="form-control" placeholder="Enter Sale Price">
                                 </div>
                             </div>
                         </div>
 
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="mb-3 u-tagsinput">
-                                    <label for="example-fileinput" class="form-label">Product Tags</label>
-                                    <input type="text" name="tags" class="form-control" value="" data-role="tagsinput">
-                                </div>
-                            </div>
-                        </div>
+
 
                         <div class="row">
-                            <div class="col-6">
-                                <div class="mb-3">
-                                    <label for="example-textarea" class="form-label">Choose Project Section</label>
-                                    <select name="size_id[]" class="select2 form-control select2-multiple" data-toggle="select2"
-                                            multiple="multiple"  required>
-                                        @foreach($sizes as $sizeData)
-                                            <option value="{{$sizeData->id}}">{{$sizeData->size}}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-
                             <div class="col-6">
                                 <div class="mb-3">
                                     <label for="example-fileinput" class="form-label">Stock</label>
@@ -521,44 +408,6 @@
                             </div>
                         </div>
 
-                        <div class="row">
-                            <div class="col-6">
-                                <div class="mb-3">
-                                    <label for="example-select" class="form-label">is Related</label>
-                                    <select name="is_related" class="form-select">
-                                        <option value="1">Yes</option>
-                                        <option value="0">No</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="mb-3">
-                                    <label for="example-select" class="form-label">is New Arrival</label>
-                                    <select name="is_new_arrival" class="form-select">
-                                        <option value="1">Yes</option>
-                                        <option value="0">No</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="mb-3">
-                                    <label for="example-select" class="form-label">is Popular</label>
-                                    <select name="is_popular" class="form-select">
-                                        <option value="1">Yes</option>
-                                        <option value="0">No</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="mb-3">
-                                    <label for="example-select" class="form-label">Delivery Charge</label>
-                                    <select name="delivery_charge" class="form-select">
-                                        <option selected value="0">Not Free</option>
-                                        <option value="1">Free</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
                         <div class="d-flex justify-content-end">
                             <button class="btn btn-primary" type="submit">Submit</button>
                         </div>
@@ -656,55 +505,5 @@
     }
 </script>
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-    $(document).ready(function() {
-        function loadSubCategories(categoryId, subCategorySelectId) {
-            if (categoryId) {
-                $.ajax({
-                    url: '/admin/categories/' + categoryId + '/sub-categories',
-                    type: 'GET',
-                    dataType: 'json',
-                    success: function(data) {
-                        console.log(data);
-                        $(subCategorySelectId).empty();
-                        $(subCategorySelectId).append('<option value="">Select Sub Category</option>');
-                        $.each(data, function(key, value) {
-                            $(subCategorySelectId).append('<option value="' + value.id + '">' + value.name + '</option>');
-                        });
-                    },
-                    error: function(xhr, status, error) {
-                        console.log(error);
-                    }
-                });
-            } else {
-                $(subCategorySelectId).empty();
-                $(subCategorySelectId).append('<option value="">Select Sub Category</option>');
-            }
-        }
-
-        // Add Modal Category Change
-        $('#category-select').on('change', function() {
-            var categoryId = $(this).val();
-            loadSubCategories(categoryId, '#sub-category-select');
-        });
-
-        // Edit Modal Category Change
-        $('.edit-category-select').on('change', function() {
-            var productId = $(this).data('product-id');
-            var categoryId = $(this).val();
-            loadSubCategories(categoryId, '#sub-category-select-' + productId);
-        });
-
-        // Load sub-categories when the edit modal is shown
-        $('.edit-modal').on('show.bs.modal', function(event) {
-            var button = $(event.relatedTarget);
-            var productId = button.data('product-id');
-            var categorySelect = $('#category-select-' + productId);
-            var categoryId = categorySelect.val();
-            loadSubCategories(categoryId, '#sub-category-select-' + productId);
-        });
-    });
-</script>
 
 @endsection

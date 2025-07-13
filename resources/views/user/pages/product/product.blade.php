@@ -19,20 +19,10 @@
                                 <div id="availabilitycollapse" class="accordion-collapse collapse show" aria-labelledby="availabilityHeading" data-bs-parent="#availabilityAccordion">
                                     <ul class="sub_category_wrapper">
                                         @foreach($categories as $category)
-                                            <li class="{{ $category->subCategories->count() ? 'sub_category_wrap' : '' }}">
+                                            <li class="{{ $category->count() ? 'sub_category_wrap' : '' }}">
                                                 <a href="{{ route('frontend.all.product', ['category' => $category->id]) }}" class="parent_category">
                                                     {{ $category->name }}
-                                                    @if($category->subCategories->count())
-                                                        <i class="bi bi-chevron-right"></i>
-                                                    @endif
                                                 </a>
-                                                @if($category->subCategories->count())
-                                                    <ul class="sub_category">
-                                                        @foreach($category->subCategories as $subCategory)
-                                                            <li><a href="{{ route('frontend.all.product', ['category' => $category->id, 'subcategory' => $subCategory->id]) }}">{{ $subCategory->name }}</a></li>
-                                                        @endforeach
-                                                    </ul>
-                                                @endif
                                             </li>
                                         @endforeach
                                     </ul>
@@ -73,11 +63,6 @@
 							<div class="col-6 col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="{{ $loop->iteration * 100}}">
 								<div class="product_item">
 									<div class="product_img">
-{{--										@if($product->discount_amount!=null)--}}
-{{--                                        <div class="marks">--}}
-{{--                                            <span class="mark">Save: {{$product->amount-$product->discount_amount}}৳</span>--}}
-{{--                                        </div>--}}
-{{--                                        @endif--}}
 
                                        @php
                                         $user = Auth::user();
@@ -104,22 +89,23 @@
 												$images = json_decode($product->image, true);
 												$firstImage = $images ? $images[0] : 'default.png';
 											@endphp
-											<img src="{{ asset('images/product/' . $firstImage) }}" draggable="false" class="img-fluid" alt="{{ $product->name }}" />
+											<img src="{{ asset('images/product/' . $firstImage) }}" draggable="false" class="img-fluid" alt="{{ $product->name }}" style="height: 200px;" />
+                                            <br> <br> <br> <br>
 
-                                            @if($product->discount_amount!=null)
+                                            @if($product->sale_price!=null)
                                                 <div class="product_content">
                                                     <div class="discount_price">
-                                                        {{$product->discount_amount}}
+                                                        {{$product->sale_price}}
                                                         TK.
                                                     </div>
                                                     <p class="line_through">
-                                                        {{$product->amount}} TK.
+                                                        {{$product->price}} TK.
                                                     </p>
                                                 </div>
                                             @else
                                                 <div class="product_content">
                                                     <div class="discount_price">
-                                                        {{$product->amount}}
+                                                        {{$product->price}}
                                                         TK.
                                                     </div>
                                                 </div>

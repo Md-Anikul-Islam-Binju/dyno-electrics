@@ -34,7 +34,7 @@ Route::get('/', [FrontendController::class, 'index']);
 Route::get('/product-details/{id}', [ProductManageController::class, 'productDetails'])->name('frontend.product.details');
 Route::get('/custom-product-details/{id}', [ProductManageController::class, 'customProductDetails'])->name('frontend.custom.product.details');
 //All Product
-Route::get('/all-product/{category?}/{subcategory?}', [ProductManageController::class, 'allProducts'])->name('frontend.all.product');
+Route::get('/all-product/{category?}', [ProductManageController::class, 'allProducts'])->name('frontend.all.product');
 
 
 //Add to Cart & Cart Page show

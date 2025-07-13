@@ -13,9 +13,9 @@ use Illuminate\Support\Facades\Auth;use function Ramsey\Uuid\v1;
 
 class ProductManageController extends Controller
 {
-    public function allProducts(Request $request, $categoryId = null, $subCategoryId = null)
+    public function allProducts(Request $request, $categoryId = null)
     {
-        $categories = Category::with('subCategories')->get();
+        $categories = Category::latest()->get();
         $query = Product::where('status', 1);
 
         // Handle search query
@@ -27,9 +27,6 @@ class ProductManageController extends Controller
         // Handle category and subcategory filters
         if ($categoryId) {
             $query->where('category_id', $categoryId);
-            if ($subCategoryId) {
-                $query->where('sub_category_id', $subCategoryId);
-            }
         } else {
             $query->whereNotNull('available_stock')->where('available_stock', '>', 0);
         }
@@ -41,8 +38,7 @@ class ProductManageController extends Controller
         if (Auth::check()) {
             $userWishlist = Wishlist::where('user_id', Auth::id())->pluck('product_id')->toArray();
         }
-
-        return view('user.pages.product.product', compact('categories', 'products', 'categoryId', 'subCategoryId', 'userWishlist', 'search'));
+        return view('user.pages.product.product', compact('categories', 'products', 'categoryId','userWishlist', 'search'));
     }
 
 
@@ -50,20 +46,13 @@ class ProductManageController extends Controller
     public function productDetails($id)
     {
         $product = Product::where('id',$id)->first();
-        $relatedProducts = Product::where('is_related', 1)
-            ->where('status', 1)
-            ->whereNotNull('available_stock')
-            ->where('available_stock', '>', 0)
-            ->latest()
-            ->get();
 
         $userWishlist = [];
         if (Auth::check()) {
             $userWishlist = Wishlist::where('user_id', Auth::id())->pluck('product_id')->toArray();
         }
-        $productReviews = ProductReview::where('status', 1)->with('user')->get();
         $siteSetting = SiteSetting::first();
-        return view('user.pages.product.productDetails',compact('product','relatedProducts','userWishlist','productReviews','siteSetting'));
+        return view('user.pages.product.productDetails',compact('product','userWishlist','siteSetting'));
 
     }
 

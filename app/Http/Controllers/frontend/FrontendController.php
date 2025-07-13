@@ -14,8 +14,7 @@ class FrontendController extends Controller
 {
     public function index()
     {
-        $newArrivalProducts = Product::where('is_new_arrival', 1)
-            ->where('status', 1)
+        $product = Product::where('status', 1)
             ->whereNotNull('available_stock')
             ->where('available_stock', '>', 0)
             ->latest()
@@ -32,6 +31,6 @@ class FrontendController extends Controller
 
 
         $siteSetting = SiteSetting::first();
-        return view('user.dashboard',compact('newArrivalProducts','partner','userWishlist','siteSetting'));
+        return view('user.dashboard',compact('product','partner','userWishlist','siteSetting'));
     }
 }
