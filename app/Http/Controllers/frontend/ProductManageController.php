@@ -13,7 +13,35 @@ use Illuminate\Support\Facades\Auth;use function Ramsey\Uuid\v1;
 
 class ProductManageController extends Controller
 {
-    public function allProducts(Request $request, $categoryId = null)
+//    public function allProducts(Request $request, $categoryId = null)
+//    {
+//        $categories = Category::latest()->get();
+//        $query = Product::where('status', 1);
+//
+//        // Handle search query
+//        $search = $request->query('search');
+//        if ($search) {
+//            $query->where('name', 'like', '%' . $search . '%');
+//        }
+//
+//        // Handle category and subcategory filters
+//        if ($categoryId) {
+//            $query->where('category_id', $categoryId);
+//        } else {
+//            $query->whereNotNull('available_stock')->where('available_stock', '>', 0);
+//        }
+//
+//        $limit = $request->get('limit', 12);
+//        $products = $query->latest()->paginate($limit);
+//
+//        $userWishlist = [];
+//        if (Auth::check()) {
+//            $userWishlist = Wishlist::where('user_id', Auth::id())->pluck('product_id')->toArray();
+//        }
+//        return view('user.pages.product.product', compact('categories', 'products', 'categoryId','userWishlist', 'search'));
+//    }
+
+    public function allProducts(Request $request, $category = null)
     {
         $categories = Category::latest()->get();
         $query = Product::where('status', 1);
@@ -24,23 +52,24 @@ class ProductManageController extends Controller
             $query->where('name', 'like', '%' . $search . '%');
         }
 
-        // Handle category and subcategory filters
-        if ($categoryId) {
-            $query->where('category_id', $categoryId);
-        } else {
-            $query->whereNotNull('available_stock')->where('available_stock', '>', 0);
+        // Handle category filter
+        if ($category) {
+            $query->where('category_id', $category);
         }
 
+        // Remove the available stock condition unless it's really necessary
+        // $query->whereNotNull('available_stock')->where('available_stock', '>', 0);
+
         $limit = $request->get('limit', 12);
-        $products = $query->latest()->paginate($limit);
+        $products = $query->latest()->paginate($limit)->appends($request->query());
 
         $userWishlist = [];
         if (Auth::check()) {
             $userWishlist = Wishlist::where('user_id', Auth::id())->pluck('product_id')->toArray();
         }
-        return view('user.pages.product.product', compact('categories', 'products', 'categoryId','userWishlist', 'search'));
-    }
 
+        return view('user.pages.product.product', compact('categories', 'products', 'category', 'userWishlist', 'search'));
+    }
 
 
     public function productDetails($id)

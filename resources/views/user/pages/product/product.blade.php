@@ -19,8 +19,8 @@
                                 <div id="availabilitycollapse" class="accordion-collapse collapse show" aria-labelledby="availabilityHeading" data-bs-parent="#availabilityAccordion">
                                     <ul class="sub_category_wrapper">
                                         @foreach($categories as $category)
-                                            <li class="{{ $category->count() ? 'sub_category_wrap' : '' }}">
-                                                <a href="{{ route('frontend.all.product', ['category' => $category->id]) }}" class="parent_category">
+                                            <li>
+                                                <a href="{{ route('frontend.all.product', array_merge(['category' => $category->id], request()->except('category'))) }}" class="parent_category">
                                                     {{ $category->name }}
                                                 </a>
                                             </li>
