@@ -141,29 +141,29 @@
 {{--                </li>--}}
 
 
-                 <li class="side-nav-item">
-                    <a data-bs-toggle="collapse" href="#orderPages" aria-expanded="false" aria-controls="orderPages" class="side-nav-link">
-                        <i class="ri-pages-line"></i>
-                        <span> Order Manage </span>
-                        <span class="menu-arrow"></span>
-                    </a>
-                    <div class="collapse" id="orderPages">
-                        <ul class="side-nav-second-level">
-                            <li>
-                               <a href="{{route('admin.pending.order.manage')}}">Pending Order</a>
-                            </li>
-                            <li>
-                                <a href="{{route('admin.processing.order.manage')}}">Processing Order</a>
-                            </li>
-                            <li>
-                                <a href="{{route('admin.completed.order.manage')}}">Delivered Order</a>
-                            </li>
-                            <li>
-                                <a href="{{route('admin.decline.order.manage')}}">Cancelled Order</a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
+{{--                 <li class="side-nav-item">--}}
+{{--                    <a data-bs-toggle="collapse" href="#orderPages" aria-expanded="false" aria-controls="orderPages" class="side-nav-link">--}}
+{{--                        <i class="ri-pages-line"></i>--}}
+{{--                        <span> Order Manage </span>--}}
+{{--                        <span class="menu-arrow"></span>--}}
+{{--                    </a>--}}
+{{--                    <div class="collapse" id="orderPages">--}}
+{{--                        <ul class="side-nav-second-level">--}}
+{{--                            <li>--}}
+{{--                               <a href="{{route('admin.pending.order.manage')}}">Pending Order</a>--}}
+{{--                            </li>--}}
+{{--                            <li>--}}
+{{--                                <a href="{{route('admin.processing.order.manage')}}">Processing Order</a>--}}
+{{--                            </li>--}}
+{{--                            <li>--}}
+{{--                                <a href="{{route('admin.completed.order.manage')}}">Delivered Order</a>--}}
+{{--                            </li>--}}
+{{--                            <li>--}}
+{{--                                <a href="{{route('admin.decline.order.manage')}}">Cancelled Order</a>--}}
+{{--                            </li>--}}
+{{--                        </ul>--}}
+{{--                    </div>--}}
+{{--                </li>--}}
 
 
                 <li class="side-nav-item">
