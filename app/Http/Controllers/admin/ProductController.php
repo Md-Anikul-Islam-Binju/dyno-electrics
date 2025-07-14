@@ -5,7 +5,9 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Product;
-use App\Models\ProductReview;use App\Models\Size;
+use App\Models\ProductReview;
+use App\Models\ProductSpecification;
+use App\Models\Size;
 use App\Models\SubCategory;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -17,16 +19,15 @@ class ProductController extends Controller
 {
     public function index()
     {
-        $products = Product::latest()->get();
-        //$products = Product::orderBy('serial_no')->get();
+        $products = Product::with('specifications')->latest()->get();
         $categories = Category::where('status', 1)->latest()->get();
 
         return view('admin.pages.product.index', compact('products', 'categories'));
     }
 
+
     public function store(Request $request)
     {
-
         try {
             $request->validate([
                 'category_id' => 'required',
@@ -53,6 +54,18 @@ class ProductController extends Controller
             $product->details = $request->details;
             $product->image = json_encode($imagePaths);
             $product->save();
+
+            // Save product specifications (title and value pairs)
+            foreach ($request->title as $index => $title) {
+                if (!empty($title) && isset($request->value[$index])) {
+                    ProductSpecification::create([
+                        'product_id' => $product->id,
+                        'title' => $title,
+                        'value' => $request->value[$index]
+                    ]);
+                }
+            }
+
             Toastr::success('Product Added Successfully', 'Success');
             return redirect()->back();
         } catch (\Exception $e) {
@@ -64,6 +77,7 @@ class ProductController extends Controller
 
     public function update(Request $request, $id)
     {
+
 
         try {
             $request->validate([
@@ -110,6 +124,7 @@ class ProductController extends Controller
                 'status' => $request->status,
                 'image' => json_encode(array_values($imagePaths)),
             ]);
+
             Toastr::success('Product updated successfully', 'Success');
             return redirect()->back();
         } catch (\Exception $e) {

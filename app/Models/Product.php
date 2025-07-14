@@ -22,5 +22,17 @@ class Product extends Model
         'status',
     ];
 
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
+
+    public function specifications()
+    {
+        return $this->hasMany(ProductSpecification::class);
+    }
+
+
+
 
 }

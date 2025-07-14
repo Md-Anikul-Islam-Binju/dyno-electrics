@@ -181,7 +181,7 @@
                             <td>{{$productData->status==1? 'Active':'Inactive'}}</td>
                             <td style="width: 100px;">
                                 <div class="d-flex justify-content-end gap-1">
-                                    <button type="button" class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#editNewModalId{{$productData->id}}">Edit</button>
+{{--                                    <button type="button" class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#editNewModalId{{$productData->id}}">Edit</button>--}}
                                     <a href="{{route('admin.product.destroy',$productData->id)}}"class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#danger-header-modal{{$productData->id}}">Delete</a>
                                 </div>
                             </td>
@@ -286,9 +286,6 @@
                                                         </div>
                                                     </div>
                                                 </div>
-
-
-
 
 
                                                 <div class="d-flex justify-content-end">
@@ -408,6 +405,25 @@
                             </div>
                         </div>
 
+                        <h4>Product Specification:</h4>
+                        <div id="name-fields">
+                            <div class="row name-field">
+                                <div class="col-5 mb-3">
+                                    <label for="title" class="form-label">Title</label>
+                                    <input type="text" name="title[]" class="form-control" placeholder="Enter Title" required>
+                                </div>
+                                <div class="col-5 mb-3">
+                                    <label for="value" class="form-label">Value</label>
+                                    <input type="text" name="value[]" class="form-control" placeholder="Enter Value" required>
+                                </div>
+                                <div class="col-2 d-flex align-items-end mb-3">
+                                    <button type="button" class="btn btn-danger remove-field">Remove</button>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-secondary mb-3" id="add-more">Add More</button>
+
+
                         <div class="d-flex justify-content-end">
                             <button class="btn btn-primary" type="submit">Submit</button>
                         </div>
@@ -417,7 +433,7 @@
         </div>
     </div>
 
-<script>
+    <script>
     document.addEventListener('DOMContentLoaded', function() {
         @foreach ($products as $productData)
             initializeImageUpload('dropzoneWrapperEdit{{$productData->id}}', 'image-input-edit{{$productData->id}}', 'image-preview-container-edit{{$productData->id}}', 'deleted-images-edit{{$productData->id}}');
@@ -505,5 +521,34 @@
     }
 </script>
 
+    <script>
+        // Add More Fields in Add Form
+        document.getElementById('add-more').addEventListener('click', function() {
+            const container = document.getElementById('name-fields');
+            const newField = document.createElement('div');
+            newField.classList.add('row', 'name-field', 'mb-3');
+            newField.innerHTML = `
+            <div class="col-5">
+                <label class="form-label">Title</label>
+                <input type="text" name="title[]" class="form-control" placeholder="Enter Title" required>
+            </div>
+            <div class="col-5">
+                <label class="form-label">Value</label>
+                <input type="text" name="value[]" class="form-control" placeholder="Enter Value" required>
+            </div>
+            <div class="col-2 d-flex align-items-end">
+                <button type="button" class="btn btn-danger remove-field">Remove</button>
+            </div>
+        `;
+            container.appendChild(newField);
+        });
+
+        // Remove Fields in Add Form
+        document.getElementById('name-fields').addEventListener('click', function(e) {
+            if (e.target.classList.contains('remove-field')) {
+                e.target.closest('.name-field').remove();
+            }
+        });
+    </script>
 
 @endsection
