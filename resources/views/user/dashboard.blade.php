@@ -25,7 +25,7 @@
                                 draggable="false"
                                 class="img-fluid"
                                 alt=""
-                                style="height: 200px;width: 200px;"
+                                style="height: 200px;width: 300px;"
                             />
                             <br> <br> <br> <br>
                             <div class="product_content">
@@ -48,7 +48,7 @@
                     <div class="logo_item">
                         <img
                             draggable="false"
-                            src="assets/images/pertner/01.png"
+                            src="{{URL::to('frontend/images/mitsubishi-logo-768x502.webp')}}"
                             class="img-fluid"
                             alt=""
                         />
@@ -56,7 +56,7 @@
                     <div class="logo_item">
                         <img
                             draggable="false"
-                            src="assets/images/pertner/02.png"
+                            src="{{URL::to('frontend/images/LADA-logo-768x502.webp')}}"
                             class="img-fluid"
                             alt=""
                         />
@@ -64,7 +64,7 @@
                     <div class="logo_item">
                         <img
                             draggable="false"
-                            src="assets/images/pertner/03.png"
+                            src="{{URL::to('frontend/images/Mazda-Logo-768x502.webp')}}"
                             class="img-fluid"
                             alt=""
                         />
@@ -72,7 +72,7 @@
                     <div class="logo_item">
                         <img
                             draggable="false"
-                            src="assets/images/pertner/04.png"
+                            src="{{URL::to('frontend/images/Nissan-logo-768x502.webp')}}"
                             class="img-fluid"
                             alt=""
                         />
@@ -80,7 +80,7 @@
                     <div class="logo_item">
                         <img
                             draggable="false"
-                            src="assets/images/pertner/05.png"
+                            src="{{URL::to('frontend/images/BMW-logo-768x502.webp')}}"
                             class="img-fluid"
                             alt=""
                         />
@@ -88,7 +88,7 @@
                     <div class="logo_item">
                         <img
                             draggable="false"
-                            src="assets/images/pertner/06.png"
+                            src="{{URL::to('frontend/images/vauxhall-logo-768x502.webp')}}"
                             class="img-fluid"
                             alt=""
                         />
@@ -96,7 +96,7 @@
                     <div class="logo_item">
                         <img
                             draggable="false"
-                            src="assets/images/pertner/07.png"
+                            src="{{URL::to('frontend/images/Bentley-logo-768x502.webp')}}"
                             class="img-fluid"
                             alt=""
                         />
@@ -104,7 +104,7 @@
                     <div class="logo_item">
                         <img
                             draggable="false"
-                            src="assets/images/pertner/08.png"
+                            src="{{URL::to('frontend/images/porsche-logo-768x502.webp')}}"
                             class="img-fluid"
                             alt=""
                         />
@@ -112,7 +112,7 @@
                     <div class="logo_item">
                         <img
                             draggable="false"
-                            src="assets/images/pertner/09.png"
+                            src="{{URL::to('frontend/images/volvo-logo-768x502.webp')}}"
                             class="img-fluid"
                             alt=""
                         />
@@ -120,7 +120,7 @@
                     <div class="logo_item">
                         <img
                             draggable="false"
-                            src="assets/images/pertner/10.png"
+                            src="{{URL::to('frontend/images/volkswagen-logo-768x502.webp')}}"
                             class="img-fluid"
                             alt=""
                         />
@@ -128,51 +128,12 @@
                     <div class="logo_item">
                         <img
                             draggable="false"
-                            src="assets/images/pertner/11.png"
+                            src="{{URL::to('frontend/images/kia-logo-768x502.webp')}}"
                             class="img-fluid"
                             alt=""
                         />
                     </div>
-                    <div class="logo_item">
-                        <img
-                            draggable="false"
-                            src="assets/images/pertner/12.png"
-                            class="img-fluid"
-                            alt=""
-                        />
-                    </div>
-                    <div class="logo_item">
-                        <img
-                            draggable="false"
-                            src="assets/images/pertner/13.png"
-                            class="img-fluid"
-                            alt=""
-                        />
-                    </div>
-                    <div class="logo_item">
-                        <img
-                            draggable="false"
-                            src="assets/images/pertner/14.png"
-                            class="img-fluid"
-                            alt=""
-                        />
-                    </div>
-                    <div class="logo_item">
-                        <img
-                            draggable="false"
-                            src="assets/images/pertner/15.png"
-                            class="img-fluid"
-                            alt=""
-                        />
-                    </div>
-                    <div class="logo_item">
-                        <img
-                            draggable="false"
-                            src="assets/images/pertner/16.png"
-                            class="img-fluid"
-                            alt=""
-                        />
-                    </div>
+
                 </div>
             </div>
         </div>
