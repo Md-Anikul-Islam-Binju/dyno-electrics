@@ -12,26 +12,45 @@
     <link rel="stylesheet" href="{{asset('frontend/plugin/bootstrap-icons/bootstrap-icons.css')}}"/>
     <link rel="stylesheet" href="{{ asset('frontend/plugin/easyzoom/easyzoom.css') }}"/>
     <link rel="stylesheet" href="{{ asset('frontend/css/style.css') }}" />
-    <link rel="stylesheet" href="https://pritesh-ecom.golamsoroar.com/css/style.css">
 </head>
+<style>
+    #searchDropdown {
+        max-height: 400px;
+        overflow-y: auto;
+        width: 100%;
+        margin-top: 5px;
+        box-shadow: 0 6px 12px rgba(0,0,0,0.175);
+    }
+
+    .search-product-item {
+        padding: 10px;
+        border-bottom: 1px solid #eee;
+    }
+
+    .part-numbers-container {
+        margin-top: 5px;
+        padding-left: 10px;
+        border-left: 2px solid #eee;
+    }
+
+    .search-part-number-item {
+        padding: 5px;
+        margin: 2px 0;
+        border-radius: 4px;
+    }
+
+    .search-part-number-item:hover {
+        background-color: #f8f9fa;
+    }
+
+    .fw-bold.text-primary {
+        color: #0d6efd !important;
+    }
+</style>
 <body>
 @php
     $siteSetting = App\Models\SiteSetting::first();
 @endphp
-<div class="topbar-marquee py-1">
-    <div class="marquee-wrapper">
-        <div class="marquee-content">
-            <span>Sign up and get 10% off</span>
-            <span>Enjoy fast next-day delivery on all UK Mainland</span>
-            <span>New arrivals in stock – shop now!</span>
-            <span>Welcome to Dyno Electrics</span>
-            <span>Sign up and get 10% off</span>
-            <span>Enjoy fast next-day delivery on all UK Mainland</span>
-            <span>New arrivals in stock – shop now!</span>
-            <span>Welcome to Dyno Electrics</span>
-        </div>
-    </div>
-</div>
 <nav class="navbar navbar-expand-lg bg-white border-bottom py-3">
     <div class="container">
         <!-- Logo -->
@@ -46,9 +65,27 @@
 
         <div class="collapse navbar-collapse" id="mainNavbar">
             <!-- Search -->
-            <form action="{{ route('frontend.all.product') }}" class="d-flex mx-auto w-50" role="search">
-                <input class="form-control rounded-pill px-3" type="search"  name="search" placeholder="Search for products..." aria-label="Search">
+{{--            <form action="{{ route('frontend.all.product') }}" class="d-flex mx-auto w-50" role="search">--}}
+{{--                <input class="form-control rounded-pill px-3" type="search"  name="search" placeholder="Search for products..." aria-label="Search">--}}
+{{--            </form>--}}
+
+            <form action="{{ route('frontend.all.product') }}" method="GET" class="d-flex mx-auto w-50 position-relative" role="search" id="searchForm">
+                <input class="form-control rounded-pill px-3"
+                       type="search"
+                       name="search"
+                       id="searchInput"
+                       placeholder="Search for products or part numbers..."
+                       aria-label="Search"
+                       autocomplete="off">
+
+                <!-- Dropdown suggestion -->
+                <div class="dropdown-menu w-100" id="searchDropdown" style="display: none; position: absolute; top: 100%; left: 0; z-index: 1000;">
+                    <div class="list-group" id="searchResults">
+                        <!-- AJAX results will appear here -->
+                    </div>
+                </div>
             </form>
+
             @php
                 $cart=0;
                 $cart = Session::get('cart', []);
@@ -220,6 +257,7 @@
 <a href="#" class="scroll-top d-flex align-items-center justify-content-center active">
     <i class="bi bi-arrow-up-short"></i>
 </a>
+
 <script type="text/javascript" src="https://platform-api.sharethis.com/js/sharethis.js#property=66aa01ff566923001d52f0f0&product=inline-share-buttons&source=platform" async="async"></script>
 <script src="{{asset('frontend/plugin/jquery/jquery-3.5.1.min.js')}}"></script>
 <script src="{{asset('frontend/plugin/bootstrap/bootstrap.bundle.min.js')}}"></script>
@@ -227,5 +265,138 @@
 <script src="{{asset('frontend/plugin/swiper/swiper-bundle.min.js')}}"></script>
 <script src="{{asset('frontend/plugin/easyzoom/easyzoom.js') }}"></script>
 <script src="{{ asset('frontend/js/main.js') }}"></script>
+
+{{--<script>--}}
+{{--    $(document).ready(function() {--}}
+{{--        const searchInput = $('#searchInput');--}}
+{{--        const searchDropdown = $('#searchDropdown');--}}
+{{--        const searchResults = $('#searchResults');--}}
+
+{{--        // Search input event--}}
+{{--        searchInput.on('input', function() {--}}
+{{--            const term = $(this).val().trim();--}}
+
+{{--            if (term.length < 2) {--}}
+{{--                searchDropdown.hide();--}}
+{{--                return;--}}
+{{--            }--}}
+
+{{--            $.ajax({--}}
+{{--                url: '/search-suggestions',--}}
+{{--                data: { term: term },--}}
+{{--                success: function(data) {--}}
+{{--                    if (data.results && data.results.length > 0) {--}}
+{{--                        searchResults.empty();--}}
+
+{{--                        data.results.forEach(function(item) {--}}
+{{--                            if (item.part_numbers) {--}}
+{{--                                // Product with matched part numbers--}}
+{{--                                let html = `--}}
+{{--                                <div class="list-group-item search-product-item" data-search="${item.part_numbers[0]}">--}}
+{{--                                    <div class="fw-bold mb-1">${item.text}</div>--}}
+{{--                                    <div class="d-flex justify-content-between small py-1 px-2 rounded">--}}
+{{--                                        <span class="fw-bold text-primary">${item.part_numbers[0]}</span>--}}
+{{--                                        <span class="text-muted">${item.company_names[0]}</span>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+{{--                            `;--}}
+{{--                                searchResults.append(html);--}}
+{{--                            } else {--}}
+{{--                                // Product name match only--}}
+{{--                                searchResults.append(`--}}
+{{--                                <div class="list-group-item search-item" data-search="${item.text}">--}}
+{{--                                    ${item.text}--}}
+{{--                                </div>--}}
+{{--                            `);--}}
+{{--                            }--}}
+{{--                        });--}}
+
+{{--                        searchDropdown.show();--}}
+{{--                    } else {--}}
+{{--                        searchDropdown.hide();--}}
+{{--                    }--}}
+{{--                },--}}
+{{--                error: function(xhr, status, error) {--}}
+{{--                    console.error('Search error:', error);--}}
+{{--                    searchDropdown.hide();--}}
+{{--                }--}}
+{{--            });--}}
+{{--        });--}}
+
+
+{{--        $(document).on('click', '.search-product-item, .search-item', function() {--}}
+{{--            const searchValue = $(this).data('search');--}}
+
+{{--            // Fill the input--}}
+{{--            searchInput.val(searchValue);--}}
+
+{{--            // Redirect to allProducts with search query--}}
+{{--            window.location.href = `/all-product?search=${encodeURIComponent(searchValue)}`;--}}
+{{--        });--}}
+{{--    });--}}
+{{--</script>--}}
+
+<script>
+    $(document).ready(function() {
+        const searchInput = $('#searchInput');
+        const searchDropdown = $('#searchDropdown');
+        const searchResults = $('#searchResults');
+
+        searchInput.on('input', function() {
+            const term = $(this).val().trim();
+
+            if (term.length < 2) {
+                searchDropdown.hide();
+                return;
+            }
+
+            $.ajax({
+                url: '/search-suggestions',
+                data: { term: term },
+                success: function(data) {
+                    if (data.results && data.results.length > 0) {
+                        searchResults.empty();
+
+                        data.results.forEach(function(item) {
+                            if (item.part_numbers) {
+                                let html = `
+                                <div class="list-group-item search-product-item" data-id="${item.id}">
+                                    <div class="fw-bold mb-1">${item.text}</div>
+                                    <div class="d-flex justify-content-between small py-1 px-2 rounded">
+                                        <span class="fw-bold text-primary">${item.part_numbers[0]}</span>
+                                        <span class="text-muted">${item.company_names[0]}</span>
+                                    </div>
+                                </div>`;
+                                searchResults.append(html);
+                            } else {
+                                searchResults.append(`
+                                <div class="list-group-item search-item" data-id="${item.id}">
+                                    ${item.text}
+                                </div>`);
+                            }
+                        });
+
+                        searchDropdown.show();
+                    } else {
+                        searchDropdown.hide();
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error('Search error:', error);
+                    searchDropdown.hide();
+                }
+            });
+        });
+
+        // ✅ Clicking a suggestion goes to product details
+        $(document).on('click', '.search-product-item, .search-item', function() {
+            const productId = $(this).data('id');
+            if (productId) {
+                window.location.href = `/product-details/${productId}`;
+            }
+        });
+    });
+
+</script>
 </body>
 </html>

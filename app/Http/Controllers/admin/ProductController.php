@@ -5,6 +5,7 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\ProductCrossReference;
 use App\Models\ProductReview;
 use App\Models\ProductSpecification;
 use App\Models\Size;
@@ -21,13 +22,13 @@ class ProductController extends Controller
     {
         $products = Product::with('specifications')->latest()->get();
         $categories = Category::where('status', 1)->latest()->get();
-
         return view('admin.pages.product.index', compact('products', 'categories'));
     }
 
 
     public function store(Request $request)
     {
+
         try {
             $request->validate([
                 'category_id' => 'required',
@@ -35,6 +36,10 @@ class ProductController extends Controller
                 'price' => 'required',
                 'stock' => 'required',
                 'image' => 'required',
+                'spec_title' => 'required|array',
+                'spec_value' => 'required|array',
+                'part_number' => 'required|array',
+                'company_name' => 'required|array',
             ]);
             $imagePaths = [];
             if ($request->hasFile('image')) {
@@ -55,16 +60,28 @@ class ProductController extends Controller
             $product->image = json_encode($imagePaths);
             $product->save();
 
-            // Save product specifications (title and value pairs)
-            foreach ($request->title as $index => $title) {
-                if (!empty($title) && isset($request->value[$index])) {
+            // Save product specifications
+            foreach ($request->spec_title as $index => $title) {
+                if (!empty($title) && isset($request->spec_value[$index])) {
                     ProductSpecification::create([
                         'product_id' => $product->id,
                         'title' => $title,
-                        'value' => $request->value[$index]
+                        'value' => $request->spec_value[$index]
                     ]);
                 }
             }
+
+            // Save product cross references
+            foreach ($request->part_number as $index => $partNumber) {
+                if (!empty($partNumber) && isset($request->company_name[$index])) {
+                    ProductCrossReference::create([
+                        'product_id' => $product->id,
+                        'part_number' => $partNumber,
+                        'company_name' => $request->company_name[$index]
+                    ]);
+                }
+            }
+
 
             Toastr::success('Product Added Successfully', 'Success');
             return redirect()->back();
@@ -75,62 +92,60 @@ class ProductController extends Controller
 
 
 
-    public function update(Request $request, $id)
-    {
-
-
-        try {
-            $request->validate([
-                'category_id' => 'required',
-                'name' => 'required',
-                'price' => 'required',
-                'stock' => 'required',
-                'image' => 'sometimes|array',
-                'image.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            ]);
-            $product = Product::findOrFail($id);
-            $imagePaths = json_decode($product->image, true) ?? [];
-
-            // Update images
-            if ($request->hasFile('image')) {
-                foreach ($request->file('image') as $imageFile) {
-                    $imageName = time() . '_' . uniqid() . '.' . $imageFile->extension();
-                    $imageFile->move(public_path('images/product'), $imageName);
-                    $imagePaths[] = $imageName;
-                }
-            }
-
-            // Remove deleted images
-            if ($request->has('deleted_images')) {
-                $deletedImages = json_decode($request->deleted_images, true);
-                $imagePaths = array_diff($imagePaths, $deletedImages);
-                foreach ($deletedImages as $deletedImage) {
-                    $imagePath = public_path('images/product/' . $deletedImage);
-                    if (!empty($deletedImage) && file_exists($imagePath) && is_file($imagePath)) {
-                        unlink($imagePath);
-                    }
-                }
-            }
-
-            //dd($request->all());
-            $product->update([
-                'category_id' => $request->category_id,
-                'name' => $request->name,
-                'price' => $request->price,
-                'sale_price' => $request->sale_price,
-                'stock' => $request->stock,
-                'available_stock' => $request->stock,
-                'details' => $request->details,
-                'status' => $request->status,
-                'image' => json_encode(array_values($imagePaths)),
-            ]);
-
-            Toastr::success('Product updated successfully', 'Success');
-            return redirect()->back();
-        } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'An error occurred: ' . $e->getMessage());
-        }
-    }
+//    public function update(Request $request, $id)
+//    {
+//        try {
+//            $request->validate([
+//                'category_id' => 'required',
+//                'name' => 'required',
+//                'price' => 'required',
+//                'stock' => 'required',
+//                'image' => 'sometimes|array',
+//                'image.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+//            ]);
+//            $product = Product::findOrFail($id);
+//            $imagePaths = json_decode($product->image, true) ?? [];
+//
+//            // Update images
+//            if ($request->hasFile('image')) {
+//                foreach ($request->file('image') as $imageFile) {
+//                    $imageName = time() . '_' . uniqid() . '.' . $imageFile->extension();
+//                    $imageFile->move(public_path('images/product'), $imageName);
+//                    $imagePaths[] = $imageName;
+//                }
+//            }
+//
+//            // Remove deleted images
+//            if ($request->has('deleted_images')) {
+//                $deletedImages = json_decode($request->deleted_images, true);
+//                $imagePaths = array_diff($imagePaths, $deletedImages);
+//                foreach ($deletedImages as $deletedImage) {
+//                    $imagePath = public_path('images/product/' . $deletedImage);
+//                    if (!empty($deletedImage) && file_exists($imagePath) && is_file($imagePath)) {
+//                        unlink($imagePath);
+//                    }
+//                }
+//            }
+//
+//            //dd($request->all());
+//            $product->update([
+//                'category_id' => $request->category_id,
+//                'name' => $request->name,
+//                'price' => $request->price,
+//                'sale_price' => $request->sale_price,
+//                'stock' => $request->stock,
+//                'available_stock' => $request->stock,
+//                'details' => $request->details,
+//                'status' => $request->status,
+//                'image' => json_encode(array_values($imagePaths)),
+//            ]);
+//
+//            Toastr::success('Product updated successfully', 'Success');
+//            return redirect()->back();
+//        } catch (\Exception $e) {
+//            return redirect()->back()->with('error', 'An error occurred: ' . $e->getMessage());
+//        }
+//    }
 
 
     public function destroy($id)

@@ -14,4 +14,9 @@ class ProductCrossReference extends Model
         'part_number',
         'company_name',
     ];
+
+    public function product()
+    {
+        return $this->belongsTo(Product::class);
+    }
 }

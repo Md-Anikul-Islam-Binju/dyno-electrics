@@ -32,7 +32,8 @@ class Product extends Model
         return $this->hasMany(ProductSpecification::class);
     }
 
-
-
-
+    public function crossReferences()
+    {
+        return $this->hasMany(ProductCrossReference::class);
+    }
 }

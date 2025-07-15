@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\CustomizeProduct;
 use App\Models\Product;
+use App\Models\ProductCrossReference;
 use App\Models\ProductReview;
 use App\Models\SiteSetting;
 use App\Models\Wishlist;use Illuminate\Http\Request;
@@ -13,7 +14,9 @@ use Illuminate\Support\Facades\Auth;use function Ramsey\Uuid\v1;
 
 class ProductManageController extends Controller
 {
-//    public function allProducts(Request $request, $categoryId = null)
+
+
+//    public function allProducts(Request $request, $category = null)
 //    {
 //        $categories = Category::latest()->get();
 //        $query = Product::where('status', 1);
@@ -24,21 +27,23 @@ class ProductManageController extends Controller
 //            $query->where('name', 'like', '%' . $search . '%');
 //        }
 //
-//        // Handle category and subcategory filters
-//        if ($categoryId) {
-//            $query->where('category_id', $categoryId);
-//        } else {
-//            $query->whereNotNull('available_stock')->where('available_stock', '>', 0);
+//        // Handle category filter
+//        if ($category) {
+//            $query->where('category_id', $category);
 //        }
 //
+//        // Remove the available stock condition unless it's really necessary
+//        // $query->whereNotNull('available_stock')->where('available_stock', '>', 0);
+//
 //        $limit = $request->get('limit', 12);
-//        $products = $query->latest()->paginate($limit);
+//        $products = $query->latest()->paginate($limit)->appends($request->query());
 //
 //        $userWishlist = [];
 //        if (Auth::check()) {
 //            $userWishlist = Wishlist::where('user_id', Auth::id())->pluck('product_id')->toArray();
 //        }
-//        return view('user.pages.product.product', compact('categories', 'products', 'categoryId','userWishlist', 'search'));
+//
+//        return view('user.pages.product.product', compact('categories', 'products', 'category', 'userWishlist', 'search'));
 //    }
 
     public function allProducts(Request $request, $category = null)
@@ -49,16 +54,18 @@ class ProductManageController extends Controller
         // Handle search query
         $search = $request->query('search');
         if ($search) {
-            $query->where('name', 'like', '%' . $search . '%');
+            $query->where(function($q) use ($search) {
+                $q->where('name', 'like', '%' . $search . '%')
+                    ->orWhereHas('crossReferences', function($q) use ($search) {
+                        $q->where('part_number', 'like', '%' . $search . '%');
+                    });
+            });
         }
 
         // Handle category filter
         if ($category) {
             $query->where('category_id', $category);
         }
-
-        // Remove the available stock condition unless it's really necessary
-        // $query->whereNotNull('available_stock')->where('available_stock', '>', 0);
 
         $limit = $request->get('limit', 12);
         $products = $query->latest()->paginate($limit)->appends($request->query());
@@ -70,6 +77,48 @@ class ProductManageController extends Controller
 
         return view('user.pages.product.product', compact('categories', 'products', 'category', 'userWishlist', 'search'));
     }
+
+    public function searchSuggestions(Request $request)
+    {
+        $search = $request->query('term');
+
+        if (!$search) {
+            return response()->json(['results' => []]);
+        }
+
+        // 1. Search products by name
+        $products = Product::where('name', 'like', '%' . $search . '%')
+            ->where('status', 1)
+            ->select('name as text', 'id')
+            ->limit(5)
+            ->get();
+
+        // 2. Search part numbers (only those matching term)
+        $matchingReferences = ProductCrossReference::where('part_number', 'like', '%' . $search . '%')
+            ->with(['product' => function($query) {
+                $query->where('status', 1)->select('id', 'name');
+            }])
+            ->get();
+
+        // 3. Map only the matched part_number for each result
+        $partNumberResults = $matchingReferences->map(function($ref) {
+            $product = $ref->product;
+            if (!$product) return null;
+
+            return [
+                'text' => $product->name,
+                'id' => $product->id,
+                'part_numbers' => [$ref->part_number],
+                'company_names' => [$ref->company_name]
+            ];
+        })->filter(); // Remove null values
+
+        // 4. Combine both product name matches & part number matches
+        return response()->json([
+            'results' => $products->concat($partNumberResults)->values()
+        ]);
+    }
+
 
 
     public function productDetails($id)
@@ -85,35 +134,7 @@ class ProductManageController extends Controller
 
     }
 
-    public function customProductDetails($id)
-    {
-        $product = CustomizeProduct::where('id',$id)->first();
-        $relatedProducts = Product::where('is_related', 1)
-            ->where('status', 1)
-            ->whereNotNull('available_stock')
-            ->where('available_stock', '>', 0)
-            ->latest()
-            ->get();
 
-        $userWishlist = [];
-        if (Auth::check()) {
-            $userWishlist = Wishlist::where('user_id', Auth::id())->pluck('product_id')->toArray();
-        }
-        $productReviews = ProductReview::where('status', 1)->with('user')->get();
-        $siteSetting = SiteSetting::first();
-        return view('user.pages.product.customProductDetails',compact('product','relatedProducts','userWishlist','productReviews','siteSetting'));
-
-    }
-
-    public function bulkProduct()
-    {
-        $products = Product::where('status',1)->paginate(16);
-        $userWishlist = [];
-        if (Auth::check()) {
-            $userWishlist = Wishlist::where('user_id', Auth::id())->pluck('product_id')->toArray();
-        }
-        return view('user.pages.product.bulkProduct',compact('products','userWishlist'));
-    }
 
 
 }

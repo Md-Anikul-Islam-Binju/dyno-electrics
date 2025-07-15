@@ -3,34 +3,55 @@
     {{-- CKEditor CDN --}}
 
     <style>
-        #dropzoneWrapperAdd, #dropzoneWrapperEdit {
+        #dropzoneWrapperAdd {
             border: 2px dashed #ddd;
             padding: 20px;
             text-align: center;
             cursor: pointer;
+            margin-bottom: 15px;
+        }
+
+        .image-preview-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 15px;
         }
 
         .image-preview {
             position: relative;
-            display: inline-block;
-            margin: 10px;
+            width: 120px;
+            height: 120px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            overflow: hidden;
         }
 
-        .image-preview img.img-preview {
-            width: 100px;
-            height: 100px;
+        .img-preview {
+            width: 100%;
+            height: 100%;
             object-fit: cover;
-            border: 1px solid #ddd;
         }
 
         .remove-preview {
             position: absolute;
             top: 5px;
             right: 5px;
-            background: rgba(255, 255, 255, 0.8);
+            background: rgba(255, 0, 0, 0.7);
+            color: white;
+            width: 20px;
+            height: 20px;
             border-radius: 50%;
-            padding: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             cursor: pointer;
+            font-size: 12px;
+        }
+
+        .dropzone-hover {
+            border-color: #4CAF50;
+            background-color: #f8f9fa;
         }
 
         .ck.ck-content {
@@ -85,42 +106,7 @@
             color: #fff;
             box-shadow: none;
         }
-
-
-
-        .image-preview {
-            margin-bottom: 10px;
-        }
-
-        .img-wrapper {
-            position: relative;
-            display: inline-block;
-        }
-
-        .img-preview {
-            max-width: 100%;
-            height: auto;
-        }
-
-        .remove-preview {
-            position: absolute;
-            top: 0;
-            right: 0;
-            margin: 5px;
-            padding: 0;
-            line-height: 1;
-        }
-        .dropzoneWrapperEdit {
-            border: 2px dashed #ddd;
-            padding: 20px;
-            text-align: center;
-            cursor: pointer;
-        }
-
     </style>
-
-
-
 
     <div class="row">
         <div class="col-12">
@@ -181,121 +167,9 @@
                             <td>{{$productData->status==1? 'Active':'Inactive'}}</td>
                             <td style="width: 100px;">
                                 <div class="d-flex justify-content-end gap-1">
-{{--                                    <button type="button" class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#editNewModalId{{$productData->id}}">Edit</button>--}}
-                                    <a href="{{route('admin.product.destroy',$productData->id)}}"class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#danger-header-modal{{$productData->id}}">Delete</a>
+                                    <a href="{{route('admin.product.destroy',$productData->id)}}" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#danger-header-modal{{$productData->id}}">Delete</a>
                                 </div>
                             </td>
-                            <!--Edit Modal -->
-                            <div class="modal fade" id="editNewModalId{{$productData->id}}" data-bs-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="editNewModalLabel{{$productData->id}}" aria-hidden="true">
-                                <div class="modal-dialog modal-lg modal-dialog-centered">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h4 class="modal-title" id="addNewModalLabel{{$productData->id}}">Edit</h4>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <form method="post" action="{{route('admin.product.update',$productData->id)}}" enctype="multipart/form-data">
-                                                @csrf
-                                                @method('PUT')
-                                                <div class="row">
-                                                   <div class="col-6">
-                                                      <div class="mb-3">
-                                                          <label for="category-select-{{$productData->id}}" class="form-label">Category</label>
-                                                          <select name="category_id" id="category-select-{{$productData->id}}" class="form-select edit-category-select" data-product-id="{{ $productData->id }}">
-                                                              @foreach($categories as $categoryData)
-                                                              <option value="{{ $categoryData->id }}" {{ $productData->category_id == $categoryData->id ? 'selected' : '' }}>
-                                                                  {{ $categoryData->name }}
-                                                              </option>
-                                                              @endforeach
-                                                          </select>
-                                                      </div>
-                                                  </div>
-
-                                                  <div class="col-6">
-                                                      <div class="mb-3">
-                                                          <label for="name" class="form-label">Name</label>
-                                                          <input type="text" id="name" name="name" value="{{ $productData->name }}"
-                                                                 class="form-control" placeholder="Enter Name" required>
-                                                      </div>
-                                                  </div>
-                                              </div>
-                                                <div class="row">
-                                                    <div class="col-6">
-                                                        <div class="mb-3">
-                                                            <label for="example-fileinput" class="form-label">Price</label>
-                                                            <input type="text" name="price" id="price" class="form-control" value="{{$productData->price}}"
-                                                                   placeholder="Enter Price" required>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-6">
-                                                        <div class="mb-3">
-                                                            <label for="example-fileinput" class="form-label">Sale Price</label>
-                                                            <input type="text" id="sale_price" name="sale_price" value="{{$productData->sale_price}}"
-                                                                   class="form-control" placeholder="Enter Sale Price">
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-
-                                                <div class="row">
-                                                    <div class="col-6">
-                                                        <div class="mb-3">
-                                                            <label for="example-fileinput" class="form-label">Stock</label>
-                                                            <input type="text" id="stock" name="stock" value="{{$productData->stock}}"
-                                                                   class="form-control" placeholder="Enter Stock">
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-6">
-                                                        <div class="mb-3">
-                                                            <label for="example-select" class="form-label">Status</label>
-                                                            <select name="status" class="form-select">
-                                                                <option value="1" {{ $productData->status === 1 ? 'selected' : '' }}>Active</option>
-                                                                <option value="0" {{ $productData->status === 0 ? 'selected' : '' }}>Inactive</option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-12">
-                                                        <div class="mb-3">
-                                                            <label>Images</label>
-                                                            <div id="dropzoneWrapperEdit{{$productData->id}}"  class="dropzoneWrapperEdit">
-                                                                <i class="h1 text-muted ri-upload-cloud-2-line"></i><br>
-                                                                <span>Drag and drop Product images</span>
-                                                                <input type="file" name="image[]" id="image-input-edit{{$productData->id}}" multiple accept="image/*" style="display: none;">
-                                                            </div>
-                                                            <div id="image-preview-container-edit{{$productData->id}}">
-                                                                @foreach (json_decode($productData->image, true) as $image)
-                                                                    <div class="image-preview">
-                                                                        <img src="{{ asset('images/product/' . $image) }}" alt="Product Image" class="img-preview">
-                                                                        <div class="remove-preview" data-filename="{{ $image }}"><i class="ri-close-line"></i></div>
-                                                                    </div>
-                                                                @endforeach
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <input type="hidden" name="deleted_images" id="deleted-images-edit{{$productData->id}}" value="[]">
-
-                                                <div class="row">
-                                                    <div class="col-12">
-                                                        <div class="mb-3">
-                                                            <label> Details </label>
-                                                            <textarea class="form-control editor"  name="details" rows="10" placeholder="Enter the Description">{!!$productData->details!!}</textarea>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-
-                                                <div class="d-flex justify-content-end">
-                                                    <button class="btn btn-primary" type="submit">Update</button>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
                             <!-- Delete Modal -->
                             <div id="danger-header-modal{{$productData->id}}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="danger-header-modalLabel{{$productData->id}}" aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered">
@@ -333,17 +207,17 @@
                     <form method="post" action="{{route('admin.product.store')}}" enctype="multipart/form-data">
                         @csrf
                         <div class="row">
-                           <div class="col-6">
-                               <div class="mb-3">
-                                   <label for="category-select" class="form-label">Category</label>
-                                   <select name="category_id" id="category-select" class="form-select" required>
-                                       <option selected value="">Select Category</option>
-                                       @foreach($categories as $categoryData)
-                                           <option value="{{ $categoryData->id }}">{{ $categoryData->name }}</option>
-                                       @endforeach
-                                   </select>
-                               </div>
-                           </div>
+                            <div class="col-6">
+                                <div class="mb-3">
+                                    <label for="category-select" class="form-label">Category</label>
+                                    <select name="category_id" id="category-select" class="form-select" required>
+                                        <option selected value="">Select Category</option>
+                                        @foreach($categories as $categoryData)
+                                            <option value="{{ $categoryData->id }}">{{ $categoryData->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
 
                             <div class="col-6">
                                 <div class="mb-3">
@@ -370,8 +244,6 @@
                             </div>
                         </div>
 
-
-
                         <div class="row">
                             <div class="col-6">
                                 <div class="mb-3">
@@ -391,7 +263,7 @@
                                         <span>Drag and drop Product images</span>
                                         <input type="file" name="image[]" id="image-input-add" multiple accept="image/*" style="opacity: 0; position: absolute;" required>
                                     </div>
-                                    <div id="image-preview-container-add"></div>
+                                    <div id="image-preview-container-add" class="image-preview-container"></div>
                                 </div>
                             </div>
                         </div>
@@ -406,23 +278,40 @@
                         </div>
 
                         <h4>Product Specification:</h4>
-                        <div id="name-fields">
-                            <div class="row name-field">
+                        <div id="specification-fields">
+                            <div class="row specification-field">
                                 <div class="col-5 mb-3">
                                     <label for="title" class="form-label">Title</label>
-                                    <input type="text" name="title[]" class="form-control" placeholder="Enter Title" required>
+                                    <input type="text" name="spec_title[]" class="form-control" placeholder="Enter Title" required>
                                 </div>
                                 <div class="col-5 mb-3">
                                     <label for="value" class="form-label">Value</label>
-                                    <input type="text" name="value[]" class="form-control" placeholder="Enter Value" required>
+                                    <input type="text" name="spec_value[]" class="form-control" placeholder="Enter Value" required>
                                 </div>
                                 <div class="col-2 d-flex align-items-end mb-3">
-                                    <button type="button" class="btn btn-danger remove-field">Remove</button>
+                                    <button type="button" class="btn btn-danger remove-spec-field">Remove</button>
                                 </div>
                             </div>
                         </div>
-                        <button type="button" class="btn btn-secondary mb-3" id="add-more">Add More</button>
+                        <button type="button" class="btn btn-secondary mb-3" id="add-spec-more">Add More Specification</button>
 
+                        <h4>Product Cross Reference:</h4>
+                        <div id="cross-reference-fields">
+                            <div class="row cross-reference-field">
+                                <div class="col-5 mb-3">
+                                    <label for="part_number" class="form-label">Part Number</label>
+                                    <input type="text" name="part_number[]" class="form-control" placeholder="Enter Part Number" required>
+                                </div>
+                                <div class="col-5 mb-3">
+                                    <label for="company_name" class="form-label">Company Name</label>
+                                    <input type="text" name="company_name[]" class="form-control" placeholder="Enter Company Name" required>
+                                </div>
+                                <div class="col-2 d-flex align-items-end mb-3">
+                                    <button type="button" class="btn btn-danger remove-cross-ref-field">Remove</button>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-secondary mb-3" id="add-cross-ref-more">Add More Cross Reference</button>
 
                         <div class="d-flex justify-content-end">
                             <button class="btn btn-primary" type="submit">Submit</button>
@@ -434,55 +323,45 @@
     </div>
 
     <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        @foreach ($products as $productData)
-            initializeImageUpload('dropzoneWrapperEdit{{$productData->id}}', 'image-input-edit{{$productData->id}}', 'image-preview-container-edit{{$productData->id}}', 'deleted-images-edit{{$productData->id}}');
-        @endforeach
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize image upload for add form
+            const dropzoneWrapper = document.getElementById('dropzoneWrapperAdd');
+            const imageInput = document.getElementById('image-input-add');
+            const previewContainer = document.getElementById('image-preview-container-add');
 
-        initializeImageUpload('dropzoneWrapperAdd', 'image-input-add', 'image-preview-container-add');
-    });
-    function initializeImageUpload(wrapperId, inputId, previewContainerId, deletedImagesInputId = null) {
-        const dropzoneWrapper = document.getElementById(wrapperId);
-        const imageInput = document.getElementById(inputId);
-        const previewContainer = document.getElementById(previewContainerId);
-        const deletedImagesInput = deletedImagesInputId ? document.getElementById(deletedImagesInputId) : null;
-        dropzoneWrapper.addEventListener('click', () => imageInput.click());
-        dropzoneWrapper.addEventListener('dragover', handleDragOver);
-        dropzoneWrapper.addEventListener('dragleave', handleDragLeave);
-        dropzoneWrapper.addEventListener('drop', (event) => handleDrop(event, imageInput));
-        imageInput.addEventListener('change', handleImageUpload);
+            // Click handler for dropzone
+            dropzoneWrapper.addEventListener('click', () => imageInput.click());
 
-        previewContainer.addEventListener('click', function(event) {
-            if (event.target.classList.contains('remove-preview') || event.target.parentElement.classList.contains('remove-preview')) {
-                const removeButton = event.target.closest('.remove-preview');
-                const imagePreview = removeButton.closest('.image-preview');
-                const filename = removeButton.getAttribute('data-filename');
-                if (deletedImagesInput) {
-                    const deletedImages = JSON.parse(deletedImagesInput.value);
-                    deletedImages.push(filename);
-                    deletedImagesInput.value = JSON.stringify(deletedImages);
+            // Drag and drop handlers
+            dropzoneWrapper.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                dropzoneWrapper.classList.add('dropzone-hover');
+            });
+
+            dropzoneWrapper.addEventListener('dragleave', () => {
+                dropzoneWrapper.classList.remove('dropzone-hover');
+            });
+
+            dropzoneWrapper.addEventListener('drop', (e) => {
+                e.preventDefault();
+                dropzoneWrapper.classList.remove('dropzone-hover');
+                if (e.dataTransfer.files.length) {
+                    imageInput.files = e.dataTransfer.files;
+                    handleImageUpload({ target: imageInput });
                 }
-                imagePreview.remove();
-            }
-        });
+            });
 
-        function handleDragOver(event) {
-            event.preventDefault();
-            dropzoneWrapper.style.border = '2px dashed #999';
-        }
+            // Image input change handler
+            imageInput.addEventListener('change', handleImageUpload);
 
-            function handleDragLeave() {
-                dropzoneWrapper.style.border = '2px dashed #ddd';
-            }
-
-            function handleDrop(event, input) {
-                event.preventDefault();
-                dropzoneWrapper.style.border = '2px dashed #ddd';
-                handleImageUpload({target: input});
-            }
-
+            // Handle image upload and preview
             function handleImageUpload(event) {
-                const files = event.target.files || event.dataTransfer.files;
+                const files = event.target.files;
+
+                // Clear previous previews if not multiple selection
+                if (!event.dataTransfer) {
+                    previewContainer.innerHTML = '';
+                }
 
                 for (const file of files) {
                     if (file.type.startsWith('image/')) {
@@ -490,65 +369,91 @@
 
                         reader.onload = function(e) {
                             const imageUrl = e.target.result;
-                            createImagePreview(imageUrl, file);
+                            createImagePreview(imageUrl, file.name);
                         };
 
-                    reader.readAsDataURL(file);
+                        reader.readAsDataURL(file);
+                    }
                 }
             }
-        }
-        function createImagePreview(imageUrl, file) {
-            const imagePreview = document.createElement('div');
-            imagePreview.classList.add('image-preview');
 
-            const imgElement = document.createElement('img');
-            imgElement.src = imageUrl;
-            imgElement.alt = file.name;
-            imgElement.classList.add('img-preview');
+            // Create image preview element
+            function createImagePreview(imageUrl, filename) {
+                const imagePreview = document.createElement('div');
+                imagePreview.classList.add('image-preview');
 
-            const removeButton = document.createElement('div');
-            removeButton.classList.add('remove-preview');
-            removeButton.innerHTML = '<i class="ri-close-line"></i>';
+                const imgElement = document.createElement('img');
+                imgElement.src = imageUrl;
+                imgElement.classList.add('img-preview');
 
-            removeButton.addEventListener('click', function() {
-                imagePreview.remove();
+                const removeButton = document.createElement('div');
+                removeButton.classList.add('remove-preview');
+                removeButton.innerHTML = '×';
+                removeButton.addEventListener('click', function() {
+                    imagePreview.remove();
+                    // You might want to update the file input here if needed
+                });
+
+                imagePreview.appendChild(imgElement);
+                imagePreview.appendChild(removeButton);
+                previewContainer.appendChild(imagePreview);
+            }
+
+            // Add More Specification Fields
+            document.getElementById('add-spec-more').addEventListener('click', function() {
+                const container = document.getElementById('specification-fields');
+                const newField = document.createElement('div');
+                newField.classList.add('row', 'specification-field', 'mb-3');
+                newField.innerHTML = `
+                <div class="col-5">
+                    <label class="form-label">Title</label>
+                    <input type="text" name="spec_title[]" class="form-control" placeholder="Enter Title" required>
+                </div>
+                <div class="col-5">
+                    <label class="form-label">Value</label>
+                    <input type="text" name="spec_value[]" class="form-control" placeholder="Enter Value" required>
+                </div>
+                <div class="col-2 d-flex align-items-end">
+                    <button type="button" class="btn btn-danger remove-spec-field">Remove</button>
+                </div>
+            `;
+                container.appendChild(newField);
             });
 
-            imagePreview.appendChild(imgElement);
-            imagePreview.appendChild(removeButton);
-            previewContainer.appendChild(imagePreview);
-        }
-    }
-</script>
+            // Remove Specification Fields
+            document.getElementById('specification-fields').addEventListener('click', function(e) {
+                if (e.target.classList.contains('remove-spec-field')) {
+                    e.target.closest('.specification-field').remove();
+                }
+            });
 
-    <script>
-        // Add More Fields in Add Form
-        document.getElementById('add-more').addEventListener('click', function() {
-            const container = document.getElementById('name-fields');
-            const newField = document.createElement('div');
-            newField.classList.add('row', 'name-field', 'mb-3');
-            newField.innerHTML = `
-            <div class="col-5">
-                <label class="form-label">Title</label>
-                <input type="text" name="title[]" class="form-control" placeholder="Enter Title" required>
-            </div>
-            <div class="col-5">
-                <label class="form-label">Value</label>
-                <input type="text" name="value[]" class="form-control" placeholder="Enter Value" required>
-            </div>
-            <div class="col-2 d-flex align-items-end">
-                <button type="button" class="btn btn-danger remove-field">Remove</button>
-            </div>
-        `;
-            container.appendChild(newField);
-        });
+            // Add More Cross Reference Fields
+            document.getElementById('add-cross-ref-more').addEventListener('click', function() {
+                const container = document.getElementById('cross-reference-fields');
+                const newField = document.createElement('div');
+                newField.classList.add('row', 'cross-reference-field', 'mb-3');
+                newField.innerHTML = `
+                <div class="col-5">
+                    <label class="form-label">Part Number</label>
+                    <input type="text" name="part_number[]" class="form-control" placeholder="Enter Part Number" required>
+                </div>
+                <div class="col-5">
+                    <label class="form-label">Company Name</label>
+                    <input type="text" name="company_name[]" class="form-control" placeholder="Enter Company Name" required>
+                </div>
+                <div class="col-2 d-flex align-items-end">
+                    <button type="button" class="btn btn-danger remove-cross-ref-field">Remove</button>
+                </div>
+            `;
+                container.appendChild(newField);
+            });
 
-        // Remove Fields in Add Form
-        document.getElementById('name-fields').addEventListener('click', function(e) {
-            if (e.target.classList.contains('remove-field')) {
-                e.target.closest('.name-field').remove();
-            }
+            // Remove Cross Reference Fields
+            document.getElementById('cross-reference-fields').addEventListener('click', function(e) {
+                if (e.target.classList.contains('remove-cross-ref-field')) {
+                    e.target.closest('.cross-reference-field').remove();
+                }
+            });
         });
     </script>
-
 @endsection
