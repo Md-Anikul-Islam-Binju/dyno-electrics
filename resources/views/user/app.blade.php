@@ -266,75 +266,6 @@
 <script src="{{asset('frontend/plugin/easyzoom/easyzoom.js') }}"></script>
 <script src="{{ asset('frontend/js/main.js') }}"></script>
 
-{{--<script>--}}
-{{--    $(document).ready(function() {--}}
-{{--        const searchInput = $('#searchInput');--}}
-{{--        const searchDropdown = $('#searchDropdown');--}}
-{{--        const searchResults = $('#searchResults');--}}
-
-{{--        // Search input event--}}
-{{--        searchInput.on('input', function() {--}}
-{{--            const term = $(this).val().trim();--}}
-
-{{--            if (term.length < 2) {--}}
-{{--                searchDropdown.hide();--}}
-{{--                return;--}}
-{{--            }--}}
-
-{{--            $.ajax({--}}
-{{--                url: '/search-suggestions',--}}
-{{--                data: { term: term },--}}
-{{--                success: function(data) {--}}
-{{--                    if (data.results && data.results.length > 0) {--}}
-{{--                        searchResults.empty();--}}
-
-{{--                        data.results.forEach(function(item) {--}}
-{{--                            if (item.part_numbers) {--}}
-{{--                                // Product with matched part numbers--}}
-{{--                                let html = `--}}
-{{--                                <div class="list-group-item search-product-item" data-search="${item.part_numbers[0]}">--}}
-{{--                                    <div class="fw-bold mb-1">${item.text}</div>--}}
-{{--                                    <div class="d-flex justify-content-between small py-1 px-2 rounded">--}}
-{{--                                        <span class="fw-bold text-primary">${item.part_numbers[0]}</span>--}}
-{{--                                        <span class="text-muted">${item.company_names[0]}</span>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
-{{--                            `;--}}
-{{--                                searchResults.append(html);--}}
-{{--                            } else {--}}
-{{--                                // Product name match only--}}
-{{--                                searchResults.append(`--}}
-{{--                                <div class="list-group-item search-item" data-search="${item.text}">--}}
-{{--                                    ${item.text}--}}
-{{--                                </div>--}}
-{{--                            `);--}}
-{{--                            }--}}
-{{--                        });--}}
-
-{{--                        searchDropdown.show();--}}
-{{--                    } else {--}}
-{{--                        searchDropdown.hide();--}}
-{{--                    }--}}
-{{--                },--}}
-{{--                error: function(xhr, status, error) {--}}
-{{--                    console.error('Search error:', error);--}}
-{{--                    searchDropdown.hide();--}}
-{{--                }--}}
-{{--            });--}}
-{{--        });--}}
-
-
-{{--        $(document).on('click', '.search-product-item, .search-item', function() {--}}
-{{--            const searchValue = $(this).data('search');--}}
-
-{{--            // Fill the input--}}
-{{--            searchInput.val(searchValue);--}}
-
-{{--            // Redirect to allProducts with search query--}}
-{{--            window.location.href = `/all-product?search=${encodeURIComponent(searchValue)}`;--}}
-{{--        });--}}
-{{--    });--}}
-{{--</script>--}}
 
 <script>
     $(document).ready(function() {
@@ -387,8 +318,6 @@
                 }
             });
         });
-
-        // ✅ Clicking a suggestion goes to product details
         $(document).on('click', '.search-product-item, .search-item', function() {
             const productId = $(this).data('id');
             if (productId) {
