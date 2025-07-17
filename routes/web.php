@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\admin\AdminDashboardController;
+use App\Http\Controllers\admin\BrandController;
 use App\Http\Controllers\admin\BulkOrderManageController;
 use App\Http\Controllers\admin\CategoryController;
 use App\Http\Controllers\admin\CustomizeProductController;
@@ -115,7 +116,13 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/category-store', [CategoryController::class, 'store'])->name('admin.category.store');
         Route::put('/category-update/{id}', [CategoryController::class, 'update'])->name('admin.category.update');
         Route::get('/category-delete/{id}', [CategoryController::class, 'destroy'])->name('admin.category.destroy');
-        Route::get('/categories/{id}/sub-categories', [CategoryController::class, 'getSubCategories'])->name('admin.categories.sub.categories');
+
+        //brand
+        Route::get('/brand', [BrandController::class, 'index'])->name('admin.brand');
+        Route::post('/brand-store', [BrandController::class, 'store'])->name('admin.brand.store');
+        Route::put('/brand-update/{id}', [BrandController::class, 'update'])->name('admin.brand.update');
+        Route::get('/brand-delete/{id}', [BrandController::class, 'destroy'])->name('admin.brand.destroy');
+
 
 
         //size

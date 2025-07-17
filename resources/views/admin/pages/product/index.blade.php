@@ -136,7 +136,10 @@
                     <tr>
                         <th>S/N</th>
                         <th>Image</th>
+                        <th>EAN</th>
                         <th>Name</th>
+                        <th>Brand</th>
+                        <th>Model No</th>
                         <th>Price</th>
                         <th>Sale Price</th>
                         <th>Stock</th>
@@ -157,7 +160,10 @@
                                 @endphp
                                 <img src="{{ asset('images/product/' . $firstImage) }}" alt="Product Image" style="max-width: 50px;">
                             </td>
+                            <td>{{$productData->ean_no}}</td>
                             <td>{{$productData->name}}</td>
+                            <td>{{$productData->brand->name}}</td>
+                            <td>{{$productData->model_no}}</td>
                             <td>{{$productData->price? $productData->price :'N/A'}}</td>
                             <td>{{$productData->sale_price? $productData->sale_price :'N/A'}}</td>
 
@@ -221,11 +227,50 @@
 
                             <div class="col-6">
                                 <div class="mb-3">
+                                    <label for="brand-select" class="form-label">Brand</label>
+                                    <select name="brand_id" id="brand-select" class="form-select">
+                                        <option selected value="">Select Brand</option>
+                                        @foreach($brand as $brandData)
+                                            <option value="{{ $brandData->id }}">{{ $brandData->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-6">
+                                <div class="mb-3">
                                     <label for="name" class="form-label">Name</label>
                                     <input type="text" id="name" name="name"
                                            class="form-control" placeholder="Enter Name" required>
                                 </div>
                             </div>
+
+                            <div class="col-6">
+                                <div class="mb-3">
+                                    <label for="model_no" class="form-label">Model No</label>
+                                    <input type="text" id="model_no" name="model_no"
+                                           class="form-control" placeholder="Enter Model No" required>
+                                </div>
+                            </div>
+
+                            <div class="col-6">
+                                <div class="mb-3">
+                                    <label for="type" class="form-label">Type</label>
+                                    <input type="text" id="type" name="type"
+                                           class="form-control" placeholder="Enter Type">
+                                </div>
+                            </div>
+
+
+                            <div class="col-6">
+                                <div class="mb-3">
+                                    <label for="year" class="form-label">Year</label>
+                                    <input type="year" id="year" name="year"
+                                           class="form-control" placeholder="Enter Year">
+                                </div>
+                            </div>
+
+
                         </div>
                         <div class="row">
                             <div class="col-6">

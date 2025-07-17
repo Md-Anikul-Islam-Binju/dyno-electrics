@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\ProductCrossReference;
@@ -20,9 +21,10 @@ class ProductController extends Controller
 {
     public function index()
     {
-        $products = Product::with('specifications')->latest()->get();
+        $products = Product::with('specifications','brand')->latest()->get();
         $categories = Category::where('status', 1)->latest()->get();
-        return view('admin.pages.product.index', compact('products', 'categories'));
+        $brand = Brand::where('status', 1)->latest()->get();
+        return view('admin.pages.product.index', compact('products', 'categories','brand'));
     }
 
 
@@ -51,6 +53,16 @@ class ProductController extends Controller
             }
             $product = new Product();
             $product->category_id = $request->category_id;
+            $product->brand_id = $request->brand_id ?? null; // Optional brand_id
+
+            //auto generate ean_no random number
+
+            $product->ean_no = $request->ean_no ?? 'DYS-' . rand(1000000000, 9999999999); // Optional EAN number, auto-generated if not provided
+
+
+            $product->model_no = $request->model_no ?? null; // Optional model number
+            $product->type = $request->type ?? null; // Optional type
+            $product->year = $request->year ?? null; // Optional year
             $product->name = $request->name;
             $product->price = $request->price;
             $product->sale_price =$request->sale_price;
