@@ -123,8 +123,8 @@ class ProductManageController extends Controller
 
     public function productDetails($id)
     {
-        $product = Product::where('id',$id)->first();
-
+        $product = Product::where('id',$id)->with('category','brand','specifications','crossReferences')->first();
+        //dd($product);
         $userWishlist = [];
         if (Auth::check()) {
             $userWishlist = Wishlist::where('user_id', Auth::id())->pluck('product_id')->toArray();

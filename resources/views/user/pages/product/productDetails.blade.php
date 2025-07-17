@@ -46,20 +46,71 @@
                 <div class="col-lg-6">
                     <div class="product_block_content">
                         <h1>{{ $product->name }}</h1>
+
+                        <h6>AS index : {{ $product->name }}</h6>
+                        <h6>Model No : {{ $product->model_no }}</h6>
+                        <h6>Type : {{ $product->type }}</h6>
+                        <h6>EAN : {{ $product->ean_no }}</h6>
+                        <h6>Brand : {{ $product->brand->name }}</h6>
+                        <h6>Category : {{ $product->category->name }}</h6>
+                        <h6>Year : {{ $product->year }}</h6>
+                        <h6>Product status : {{ $product->status==1? 'Active':'Inactive' }}</h6>
+
+                        <div class="product_specification">
+                            <h2>Product Features:</h2>
+                            <div class="our_size_chart">
+                                <div class="size_chart_wrapper">
+                                    <div class="size_chart_body">
+                                        @foreach($product->specifications as $specificationsInfo)
+                                        <div class="size_chart_row">
+                                            <div>{{$specificationsInfo->title}}</div>
+                                            <div>{{$specificationsInfo->value}}</div>
+                                        </div>
+                                        @endforeach
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="product_specification">
+                            <h2>Reference Number:</h2>
+                            <div class="our_size_chart">
+                                <div class="size_chart_wrapper">
+                                    <div class="size_chart_body">
+                                        @foreach($product->crossReferences as $crossReferencesInfo)
+                                            <div class="size_chart_row">
+                                                <div>
+                                                    <a href="">
+                                                        {{$crossReferencesInfo->part_number}}
+                                                    </a>
+                                                </div>
+                                                <div>
+                                                    <a href="">
+                                                        {{$crossReferencesInfo->company_name}}
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="price_and_stock">
 
-                          @if($product->sale_price!=null)
-                            <p class="price">TK. {{ $product->sale_price }}</p>
-							<p class="line_through details_page_discount">TK. {{ $product->price }}</p>
-                          @else
-                            <p class="price">TK. {{ $product->price }}</p>
-                          @endif
+                            @if($product->sale_price!=null)
+                                <p class="price">TK. {{ $product->sale_price }}</p>
+                                <p class="line_through details_page_discount">TK. {{ $product->price }}</p>
+                            @else
+                                <p class="price">TK. {{ $product->price }}</p>
+                            @endif
 
 
                             @if($product->available_stock > 0)
-                            <p class="stock">In Stock</p>
+                                <p class="stock">In Stock</p>
                             @else
-                            <p class="stock">Out Of Stock</p>
+                                <p class="stock">Out Of Stock</p>
                             @endif
                         </div>
                         <div class="add_to_cart_and_increment">
@@ -81,10 +132,7 @@
                                 </form>
                             </div>
                         </div>
-                        <div class="product_specification">
-                            <h2>Product Specification:</h2>
-                            {!!$product->details!!}
-                        </div>
+
                     </div>
 
                 </div>
