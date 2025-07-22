@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Dyno Electrics</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body { font-family: Arial, sans-serif; }
+        .top-bar { background: #000; color: #fff; font-size: 14px; }
+        .top-bar a { color: #fff; text-decoration: none; margin: 0 10px; }
+        .logo img { max-height: 50px; }
+        .hero-banner { background: #f6fff6; padding: 20px; border-radius: 10px; }
+        .category-sidebar { background: #fff; border: 1px solid #ddd; border-radius: 10px; padding: 15px; }
+        .category-sidebar ul { list-style: none; padding: 0; }
+        .category-sidebar li { padding: 8px 0; }
+        .info-strip { background: #f8f9fa; padding: 15px; text-align: center; }
+        .info-strip i { font-size: 24px; color: #28a745; }
+        .product-banner { border-radius: 10px; padding: 20px; color: #fff; text-align: center; }
+        .product-card { border: 1px solid #ddd; border-radius: 10px; padding: 15px; text-align: center; }
+        .discount-badge { position: absolute; top: 10px; left: 10px; background: #28a745; color: #fff; padding: 5px 8px; font-size: 12px; border-radius: 5px; }
+        .brand-logos img { max-height: 40px; margin: 10px; opacity: 0.8; }
+        footer { background: #f8f9fa; padding: 40px 0; }
+    </style>
+</head>
+<body>
+
+<!-- Top Bar -->
+<div class="top-bar py-2 text-center">
+    WELCOME TO DYNO ELECTRICS | <a href="#">SIGN UP AND GET 10% OFF</a> | ENJOY FAST NEXT DAY DELIVERY ON ALL UK MAINLAND | NEW ARRIVAL IN STOCK
+</div>
+
+<!-- Header -->
+<header class="py-3 border-bottom">
+    <div class="container d-flex align-items-center justify-content-between">
+        <div class="logo"><img src="https://via.placeholder.com/150x50?text=DYNO+ELECTRICS" alt="Logo"></div>
+        <div class="flex-grow-1 px-3">
+            <input type="text" class="form-control" placeholder="Search for products...">
+        </div>
+        <div>
+            <a href="#" class="mx-2"><i class="fa fa-store"></i></a>
+            <a href="#" class="mx-2"><i class="fa fa-blog"></i></a>
+            <a href="#" class="mx-2"><i class="fa fa-user"></i></a>
+            <a href="#" class="mx-2"><i class="fa fa-shopping-cart"></i></a>
+        </div>
+    </div>
+</header>
+
+<!-- Hero Section -->
+<section class="container my-4">
+    <div class="row">
+        <div class="col-md-3">
+            <div class="category-sidebar">
+                <h5>Categories</h5>
+                <ul>
+                    <li>Alternator</li>
+                    <li>Starter Motor</li>
+                    <li>Dynamo</li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-9">
+            <div class="hero-banner">
+                <h2>Power Up with Premium Parts!</h2>
+                <p>Built for Reliability and Performance. Discount 10% OFF this week</p>
+                <a href="#" class="btn btn-success">Shop Now</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Info Strip -->
+<div class="info-strip d-flex justify-content-around">
+    <div><i class="fa fa-truck"></i><p>Fast Delivery</p></div>
+    <div><i class="fa fa-clock"></i><p>Order Before 2:30 PM</p></div>
+    <div><i class="fa fa-tag"></i><p>Low Price Guarantee</p></div>
+    <div><i class="fa fa-shield"></i><p>Satisfaction Guarantee</p></div>
+</div>
+
+<!-- Product Highlight Banners -->
+<section class="container my-4">
+    <div class="row g-3">
+        <div class="col-md-4">
+            <div class="product-banner" style="background:#ffc107;">New Arrivals - Wide Range<br><a href="#" class="text-white">Shop Now</a></div>
+        </div>
+        <div class="col-md-4">
+            <div class="product-banner" style="background:#28a745;">Latest Collection - Perfect Starter<br><a href="#" class="text-white">Shop Now</a></div>
+        </div>
+        <div class="col-md-4">
+            <div class="product-banner" style="background:#17a2b8;">Best Quality - New Arrival<br><a href="#" class="text-white">Shop Now</a></div>
+        </div>
+    </div>
+</section>
+
+<!-- Featured Products -->
+<section class="container my-5">
+    <h3 class="text-center mb-4">Featured Products</h3>
+    <div class="row g-4">
+        <div class="col-md-3">
+            <div class="product-card position-relative">
+                <div class="discount-badge">15% OFF</div>
+                <img src="https://via.placeholder.com/200x200" class="img-fluid" alt="Product">
+                <h6 class="mt-2">DYA0101</h6>
+                <p><del>£78.87</del> £66.32</p>
+                <button class="btn btn-success btn-sm">Add to Cart</button>
+            </div>
+        </div>
+        <!-- Repeat more product cards -->
+    </div>
+</section>
+
+<!-- Auto Brands -->
+<section class="container text-center my-5">
+    <h4>Compatible with Top Auto Manufacturers</h4>
+    <div class="brand-logos d-flex flex-wrap justify-content-center mt-3">
+        <img src="https://via.placeholder.com/100x40?text=Renault">
+        <img src="https://via.placeholder.com/100x40?text=Kia">
+        <img src="https://via.placeholder.com/100x40?text=Suzuki">
+        <img src="https://via.placeholder.com/100x40?text=Skoda">
+        <img src="https://via.placeholder.com/100x40?text=Ford">
+    </div>
+</section>
+
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <h5>Dyno Electrics</h5>
+                <p>We provide reliable and durable products to enhance your vehicle’s performance.</p>
+            </div>
+            <div class="col-md-2">
+                <h6>Quick Links</h6>
+                <ul class="list-unstyled">
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Shop</a></li>
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </div>
+            <div class="col-md-3">
+                <h6>Help & Support</h6>
+                <ul class="list-unstyled">
+                    <li><a href="#">My Account</a></li>
+                    <li><a href="#">Delivery Info</a></li>
+                    <li><a href="#">Returns & Refunds</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                </ul>
+            </div>
+            <div class="col-md-3">
+                <h6>Contact</h6>
+                <p>Email: info@dynoelectrics.com<br>Phone: +44 7947 294444<br>Address: 2 Norbeck Parade, London, NW10 7HR</p>
+            </div>
+        </div>
+        <div class="text-center mt-3">
+            &copy; 2025 dynoelectrics.com
+        </div>
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

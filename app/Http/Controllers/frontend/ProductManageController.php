@@ -48,7 +48,7 @@ class ProductManageController extends Controller
 
     public function allProducts(Request $request, $category = null)
     {
-        $categories = Category::latest()->get();
+        $categories = Category::where('status', 1)->get();
         $query = Product::where('status', 1);
 
         // Handle search query

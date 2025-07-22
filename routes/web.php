@@ -148,6 +148,11 @@ Route::middleware(['auth'])->group(function () {
         Route::put('/partner-update/{id}', [PartnerController::class, 'update'])->name('admin.partner.update');
         Route::get('/partner-delete/{id}', [PartnerController::class, 'destroy'])->name('admin.partner.destroy');
 
+        //manufacture
+        Route::get('/other-setting', [OtherSettingController::class, 'index'])->name('admin.other.setting');
+        Route::post('/other-setting-store', [OtherSettingController::class, 'store'])->name('admin.other.setting.store');
+        Route::put('/other-setting-update/{id}', [OtherSettingController::class, 'update'])->name('admin.other.setting.update');
+        Route::get('/other-setting-delete/{id}', [OtherSettingController::class, 'destroy'])->name('admin.other.setting.destroy');
         //Order Manage
         Route::get('/pending-order', [OrderManageController::class, 'orderPending'])->name('admin.pending.order.manage');
         Route::get('/processing-order', [OrderManageController::class, 'orderProcessing'])->name('admin.processing.order.manage');

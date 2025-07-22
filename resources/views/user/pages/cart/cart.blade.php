@@ -19,7 +19,6 @@
                                     <tr>
                                         <td class="text-center table_data_none">Image</td>
                                         <td class="text-left">Product Name</td>
-                                        <td class="text-center">Size</td>
                                         <td class="text-left text-center">Quantity</td>
                                         <td class="text-end table_data_none">Unit Price</td>
                                         <td class="text-end">Total</td>
@@ -46,7 +45,6 @@
                                         <td class="text-left">
                                             <a>{{ $item['product_name'] }}</a>
                                         </td>
-                                        <td class="text-center">{{ $item['size_name'] }}</td>
                                         <td class="text-center">
                                             <div class="qty-container">
                                                 <button type="button" class="btn btn-light btn-minus" data-product-id="{{ $key }}">

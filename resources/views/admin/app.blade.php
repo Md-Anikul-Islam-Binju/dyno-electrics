@@ -180,6 +180,9 @@
                     <div class="collapse" id="sidebarPages">
                         <ul class="side-nav-second-level">
                             <li>
+                                <a href="{{route('admin.other.setting')}}">Other Setting</a>
+                            </li>
+                            <li>
                                 <a href="{{route('admin.site.setting')}}">Site Setting</a>
                             </li>
                             <li>
@@ -189,7 +192,6 @@
                         </ul>
                     </div>
                 </li>
-
 
 
             </ul>

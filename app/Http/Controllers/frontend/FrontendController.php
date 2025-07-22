@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\frontend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use App\Models\CustomizeProduct;
 use App\Models\Manufacture;use App\Models\OrderItem;use App\Models\Partner;use App\Models\Product;
 use App\Models\ProductReview;
 use App\Models\SiteSetting;
+use App\Models\Slider;
 use App\Models\Wishlist;use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;use function Ramsey\Uuid\v1;
 
@@ -31,6 +33,10 @@ class FrontendController extends Controller
 
 
         $siteSetting = SiteSetting::first();
-        return view('user.dashboard',compact('product','partner','userWishlist','siteSetting'));
+        $sliders = Slider::where('status',1)->latest()->get();
+
+        $categories = Category::where('status', 1)->get();
+
+        return view('user.dashboard',compact('product','partner','userWishlist','siteSetting', 'sliders','categories'));
     }
 }

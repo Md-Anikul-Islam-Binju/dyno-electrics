@@ -12,6 +12,9 @@
     <link rel="stylesheet" href="{{asset('frontend/plugin/bootstrap-icons/bootstrap-icons.css')}}"/>
     <link rel="stylesheet" href="{{ asset('frontend/plugin/easyzoom/easyzoom.css') }}"/>
     <link rel="stylesheet" href="{{ asset('frontend/css/style.css') }}" />
+
+
+
 </head>
 <style>
     #searchDropdown {
@@ -89,24 +92,29 @@
             @php
                 $cart=0;
                 $cart = Session::get('cart', []);
+                $categories = DB::table('categories')->where('status', 1)->get();
             @endphp
             <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-4">
                 <li class="nav-item">
-                    <a class="nav-link active" href="#">Home</a>
+                    <a class="nav-link active" href="/">Home</a>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Shop</a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Alternators</a></li>
-                        <li><a class="dropdown-item" href="#">Starter Motors</a></li>
-                        <li><a class="dropdown-item" href="#">Dynamos</a></li>
+                        @foreach($categories as $category)
+                            <li>
+                                <a class="text-decoration-none text-dark dropdown-item" href="{{ route('frontend.all.product', array_merge(['category' => $category->id], request()->except('category'))) }}" class="parent_category">
+                                    {{ $category->name }}
+                                </a>
+                            </li>
+                        @endforeach
                     </ul>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Blog</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">About</a>
+                    <a class="nav-link" href="{{route('user.about.us')}}">About</a>
                 </li>
             </ul>
 
@@ -227,24 +235,23 @@
             <div class="col-md-3">
                 <h6>Quick link</h6>
                 <ul class="list-unstyled">
-                    <li><a href="#">Home Page</a></li>
-                    <li><a href="#">Visit Shop</a></li>
-                    <li><a href="#">Blog & News</a></li>
-                    <li><a href="#">Contact Us</a></li>
+                    <li><a class="text-decoration-none text-dark" href="/">Home Page</a></li>
+                    <li><a class="text-decoration-none text-dark" href="/all-product">Visit Shop</a></li>
+                    <li><a class="text-decoration-none text-dark" href="/contact-us">Contact Us</a></li>
                 </ul>
             </div>
             <div class="col-md-3">
                 <h6>Help & Support</h6>
                 <ul class="list-unstyled">
-                    <li><a href="#">My account</a></li>
-                    <li><a href="#">Delivery Info</a></li>
-                    <li><a href="#">Returns & Refunds</a></li>
-                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a class="text-decoration-none text-dark" href="/user/login">Delivery Info</a></li>
+                    <li><a class="text-decoration-none text-dark" href="{{route('user.privacy.policy')}}">Privacy Policy</a></li>
+                    <li><a class="text-decoration-none text-dark" href="{{route('user.return.policy')}}">Returns & Refunds</a></li>
+                    <li><a class="text-decoration-none text-dark" href="{{route('user.terms.condition')}}">Terms & Condition</a></li>
                 </ul>
             </div>
             <div class="col-md-3">
                 <h6>Contact Information</h6>
-                <p>Email: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="a6cfc8c0c9e6c2dfc8c9c3cac3c5d2d4cfc5d588c5c9cb">[email&#160;protected]</a></p>
+                <p>Email: info@dynoelectrics.com</p>
                 <p>Phone: +44 7947 242444</p>
                 <p>Address: 2, Norbreck Parade, London, NW10 7HR</p>
             </div>
