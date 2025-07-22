@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="{{asset('frontend/plugin/bootstrap-icons/bootstrap-icons.css')}}"/>
     <link rel="stylesheet" href="{{ asset('frontend/plugin/easyzoom/easyzoom.css') }}"/>
     <link rel="stylesheet" href="{{ asset('frontend/css/style.css') }}" />
-
+    <link rel="stylesheet" href="{{ asset('frontend/css/customeCss.css') }}">
 
 
 </head>
@@ -54,6 +54,21 @@
 @php
     $siteSetting = App\Models\SiteSetting::first();
 @endphp
+<div class="topbar-marquee py-1">
+    <div class="marquee-wrapper">
+        <div class="marquee-content">
+            <span>Sign up and get 10% off</span>
+            <span>Enjoy fast next-day delivery on all UK Mainland</span>
+            <span>New arrivals in stock – shop now!</span>
+            <span>Welcome to Dyno Electrics</span>
+            <span>Sign up and get 10% off</span>
+            <span>Enjoy fast next-day delivery on all UK Mainland</span>
+            <span>New arrivals in stock – shop now!</span>
+            <span>Welcome to Dyno Electrics</span>
+        </div>
+    </div>
+</div>
+
 <nav class="navbar navbar-expand-lg bg-white border-bottom py-3">
     <div class="container">
         <!-- Logo -->

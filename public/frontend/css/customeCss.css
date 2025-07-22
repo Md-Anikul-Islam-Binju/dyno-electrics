@@ -1,0 +1,358 @@
+/* General Styles */
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #f9f9f9;
+}
+
+a {
+    text-decoration: none;
+    color: #000;
+}
+
+a:hover {
+    color: #28a745;
+}
+
+/* Header */
+header input[type="search"] {
+    border-radius: 20px;
+    padding: 0.5rem 1rem;
+}
+
+/* Banner Section */
+.banner {
+    background: #eaffef;
+    padding: 2rem;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.banner-text {
+    max-width: 50%;
+}
+
+.banner-text h1 {
+    font-size: 2.2rem;
+    font-weight: bold;
+    color: #00a84f;
+    margin-bottom: 1rem;
+}
+
+.banner-text p {
+    font-size: 0.95rem;
+    color: #333;
+    margin-bottom: 0.5rem;
+}
+
+.banner-img {
+    max-width: 45%;
+    display: flex;
+    justify-content: end;
+}
+
+.banner-img img {
+    max-height: 120px;
+    margin-left: 1rem;
+}
+
+/* Feature Boxes */
+.feature-boxes {
+    margin-top: 2rem;
+}
+
+.feature-box {
+    border-radius: 10px;
+    padding: 1rem;
+    color: #000;
+    font-weight: bold;
+    text-align: center;
+    height: 100%;
+}
+
+.feature-yellow {
+    background-color: #ffe07c;
+}
+.feature-green {
+    background-color: #d1ff88;
+}
+.feature-blue {
+    background-color: #a6f3f3;
+}
+
+/* Product Cards */
+.product-card {
+    text-align: center;
+    background: white;
+    border-radius: 10px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border: 1px solid #ddd;
+    height: 100%;
+}
+
+.product-card img {
+    width: 100%;
+    height: 150px;
+    object-fit: contain;
+}
+
+.call-btn {
+    background: #28a745;
+    color: white;
+    border: none;
+    padding: 0.4rem 1rem;
+    font-size: 0.85rem;
+    margin-top: 0.5rem;
+    border-radius: 5px;
+}
+
+/* Sidebar Styles */
+.category-sidebar {
+    background-color: #ffffff;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 0 5px rgba(0,0,0,0.05);
+    height: 100%;
+}
+.category-item {
+    display: flex;
+    align-items: center;
+}
+.category-icon {
+    display: inline-block;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-right: 0.5rem;
+}
+.category-icon img {
+    width: 100%;
+    height: auto;
+    border-radius: 50%;
+}
+.category-label {
+    font-weight: 600;
+}
+.divider {
+    margin: 0.5rem 0;
+}
+
+/* Background Banner */
+.promo-banner {
+    background-image: url('/frontend/images/Web-Banner-Top.png.webp');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    min-height: 370px;
+    padding: 2rem 3rem;
+    border: 1px solid #ddd;
+    border-radius: 0.5rem;
+    display: flex;
+    align-items: center;
+    color: #3c3c3c;
+}
+.promo-content {
+    max-width: 60%;
+}
+.promo-subtitle {
+    font-size: 16px;
+    color: #3c3c3c;
+    margin-bottom: 0.5rem;
+}
+.promo-title {
+    font-size: 42px;
+    font-weight: 700;
+    color: #0a5d00;
+    line-height: 1.2;
+    margin-bottom: 1rem;
+}
+.promo-discount {
+    font-size: 16px;
+    color: #3c3c3c;
+    margin-bottom: 1rem;
+}
+.promo-btn {
+    font-size: 14px;
+    font-weight: 600;
+    padding: 0.4rem 1.2rem;
+}
+.bg-yellow {
+    background-color: #ffe07c;
+}
+.bg-green  {
+    background-color: #d1ff88;
+}
+.bg-blue   {
+    background-color: #a6f3f3;
+}
+
+/* GLOBAL FONT */
+body {
+    font-family: 'Inter', sans-serif;
+}
+
+/* 🔥 TOPBAR NEWS SCROLLER 🔥 */
+.topbar-marquee {
+    overflow: hidden;
+    font-size: 13px;
+    white-space: nowrap;
+    position: relative;
+    background-color: #000;
+    color: #fff;
+    text-transform: uppercase;
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+}
+
+.marquee-wrapper {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+}
+
+.marquee-content {
+    display: inline-block;
+    white-space: nowrap;
+    padding-left: 100%;
+    animation: scroll-left 25s linear infinite;
+}
+
+.marquee-wrapper:hover .marquee-content {
+    animation-play-state: paused;
+}
+
+.marquee-content span {
+    display: inline-block;
+    margin-right: 4rem;
+    letter-spacing: 0.5px;
+}
+
+/* Animation */
+@keyframes scroll-left {
+    0% {
+        transform: translateX(0%);
+    }
+    100% {
+        transform: translateX(-100%);
+    }
+}
+
+.feature-section {
+    background-color: #f8f9fa; /* match dynoelectrics.com */
+}
+
+.feature-item {
+    min-height: 60px;
+}
+
+.feature-icon {
+    width: 45px;
+    height: 45px;
+    object-fit: contain;
+    filter: grayscale(100%);
+    transition: all 0.3s ease;
+}
+
+.feature-item:hover .feature-icon {
+    filter: grayscale(0%);
+    transform: scale(1.05);
+}
+
+.feature-title {
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #1c1c1c;
+    margin-bottom: 2px;
+}
+
+.feature-desc {
+    font-size: 13px;
+    color: #777;
+    margin: 0;
+}
+
+.go-top-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #3ba700; /* same green */
+    width: 40px;
+    height: 40px;
+    border-radius: 0;
+    text-align: center;
+    display: none;
+    z-index: 999;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    transition: all 0.3s ease-in-out;
+}
+
+.go-top-btn .arrow-up {
+    color: #fff;
+    font-size: 18px;
+    line-height: 40px;
+    display: block;
+}
+
+.go-top-btn:hover {
+    background-color: #329000;
+    transform: scale(1.05);
+}
+
+.highlight-box {
+    background-size: cover;
+    background-position: center;
+    padding: 30px 20px;
+    color: #000;
+    height: 100%;
+    /*min-height: 250px;*/
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+}
+.highlight-cont{
+    width: 60%;
+}
+
+.highlight-box:hover {
+    transform: translateY(-5px);
+}
+
+.highlight-subtitle {
+    font-size: 13px;
+    color: #222;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+    font-weight: 500;
+}
+
+.highlight-title {
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: #000;
+}
+
+.highlight-desc {
+    font-size: 14px;
+    color: #222;
+    margin-bottom: 15px;
+}
+
+.highlight-link {
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: underline;
+    color: #006f98;
+    transition: color 0.3s;
+}
+
+.highlight-link:hover {
+    color: #004c6a;
+}
+
