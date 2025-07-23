@@ -118,7 +118,7 @@
                     <ul class="dropdown-menu">
                         @foreach($categories as $category)
                             <li>
-                                <a class="text-decoration-none text-dark dropdown-item" href="{{ route('frontend.all.product', array_merge(['category' => $category->id], request()->except('category'))) }}" class="parent_category">
+                                <a class="text-decoration-none text-dark dropdown-item" href="{{ url($category->slug) }}" class="parent_category">
                                     {{ $category->name }}
                                 </a>
                             </li>

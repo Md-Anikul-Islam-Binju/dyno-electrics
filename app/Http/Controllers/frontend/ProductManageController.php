@@ -15,37 +15,6 @@ use Illuminate\Support\Facades\Auth;use function Ramsey\Uuid\v1;
 class ProductManageController extends Controller
 {
 
-
-//    public function allProducts(Request $request, $category = null)
-//    {
-//        $categories = Category::latest()->get();
-//        $query = Product::where('status', 1);
-//
-//        // Handle search query
-//        $search = $request->query('search');
-//        if ($search) {
-//            $query->where('name', 'like', '%' . $search . '%');
-//        }
-//
-//        // Handle category filter
-//        if ($category) {
-//            $query->where('category_id', $category);
-//        }
-//
-//        // Remove the available stock condition unless it's really necessary
-//        // $query->whereNotNull('available_stock')->where('available_stock', '>', 0);
-//
-//        $limit = $request->get('limit', 12);
-//        $products = $query->latest()->paginate($limit)->appends($request->query());
-//
-//        $userWishlist = [];
-//        if (Auth::check()) {
-//            $userWishlist = Wishlist::where('user_id', Auth::id())->pluck('product_id')->toArray();
-//        }
-//
-//        return view('user.pages.product.product', compact('categories', 'products', 'category', 'userWishlist', 'search'));
-//    }
-
     public function allProducts(Request $request, $category = null)
     {
         $categories = Category::where('status', 1)->get();
@@ -134,6 +103,24 @@ class ProductManageController extends Controller
 
     }
 
+
+    public function categoryWiseProduct(Request $request, $slug = null)
+    {
+        if (!$slug) {
+            abort(404, 'Category not found');
+        }
+
+        $category = Category::where('slug', $slug)
+            ->orWhere('id', $slug) // optional: allow ID-based access
+            ->firstOrFail();
+
+
+        $products = Product::where('category_id', $category->id)
+            ->where('status', 1)
+            ->paginate(12);
+
+        return view('user.pages.product.categoryWiseProduct', compact('products', 'slug'));
+    }
 
 
 

@@ -40,7 +40,7 @@ Route::get('/custom-product-details/{id}', [ProductManageController::class, 'cus
 Route::get('/all-product/{category?}', [ProductManageController::class, 'allProducts'])->name('frontend.all.product');
 Route::get('/search-suggestions', [ProductManageController::class, 'searchSuggestions'])->name('frontend.search.suggestions');
 
-
+Route::get('/{slug?}', [ProductManageController::class, 'categoryWiseProduct'])->name('category.wise.product');
 
 //Add to Cart & Cart Page show
 Route::post('/cart/add', [CartController::class, 'addToCart'])->name('cart.add');
