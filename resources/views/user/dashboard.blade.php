@@ -169,11 +169,11 @@
 
                             @if($productData->sale_price)
                                 <div class="d-flex justify-content-center align-items-center gap-2">
-                                    <span class="fw-bold text-danger">{{ $productData->sale_price }} TK</span>
-                                    <span class="text-muted text-decoration-line-through">{{ $productData->price }} TK</span>
+                                    <span class="fw-bold text-danger">{{ $productData->sale_price }} $</span>
+                                    <span class="text-muted text-decoration-line-through">{{ $productData->price }} $</span>
                                 </div>
                             @else
-                                <div class="fw-bold text-dark">{{ $productData->price }} TK</div>
+                                <div class="fw-bold text-dark">{{ $productData->price }} $</div>
                             @endif
 
 

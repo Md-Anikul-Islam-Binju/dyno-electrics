@@ -57,8 +57,8 @@ class CartController extends Controller
         // Method to display the cart
         public function showCart()
         {
+
             $cart = Session::get('cart', []);
-            //dd($cart);
             return view('user.pages.cart.cart', compact('cart'));
         }
 

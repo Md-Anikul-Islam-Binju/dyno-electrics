@@ -57,10 +57,10 @@
                                             </div>
                                         </td>
                                         <td class="text-end table_data_none">
-                                            {{ $item['price'] }} ৳
+                                            {{ $item['price'] }} $
                                         </td>
                                         <td class="text-end">
-                                            {{ $item['price'] * $item['qty'] }} ৳
+                                            {{ $item['price'] * $item['qty'] }} $
                                         </td>
                                         <td class="text-end">
                                             <a href="{{ route('cart.item.remove', $key) }}" class="btn btn-danger btn-sm">
@@ -80,11 +80,11 @@
                                 <tbody>
                                     <tr>
                                         <td class="text-right"><strong>Sub-Total:</strong></td>
-                                        <td class="text-right amount">{{ $subTotal }}৳</td>
+                                        <td class="text-right amount">{{ $subTotal }}$</td>
                                     </tr>
                                     <tr>
                                         <td class="text-right"><strong>Total:</strong></td>
-                                        <td class="text-right amount">{{ $subTotal }}৳</td>
+                                        <td class="text-right amount">{{ $subTotal }}$</td>
                                     </tr>
                                 </tbody>
                             </table>

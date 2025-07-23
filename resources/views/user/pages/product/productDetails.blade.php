@@ -93,10 +93,10 @@
                         <!-- Price & Stock -->
                         <div class="price_and_stock">
                             @if($product->sale_price!=null)
-                                <p class="price">TK. {{ $product->sale_price }}</p>
-                                <p class="line_through details_page_discount">TK. {{ $product->price }}</p>
+                                <p class="price">$. {{ $product->sale_price }}</p>
+                                <p class="line_through details_page_discount">$. {{ $product->price }}</p>
                             @else
-                                <p class="price">TK. {{ $product->price }}</p>
+                                <p class="price">$. {{ $product->price }}</p>
                             @endif
 
                             @if($product->available_stock > 0)

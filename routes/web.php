@@ -47,26 +47,19 @@ Route::post('/cart/add', [CartController::class, 'addToCart'])->name('cart.add')
 Route::post('/cart/add/bulk/order', [CartController::class, 'addToCartBulkOrder'])->name('cart.add.bulk.order');
 
 Route::get('/cart', [CartController::class, 'showCart'])->name('cart.show');
-Route::get('/bulk/cart', [CartController::class, 'showBulkCart'])->name('bulk.cart.show');
+
 
 Route::post('/cart/update', [CartController::class, 'updateCart'])->name('cart.update');
-Route::post('/bULK/cart/update', [CartController::class, 'updateBulkCart'])->name('bulk.cart.update');
 
 Route::get('/cart/remove/{id}', [CartController::class, 'removeItem'])->name('cart.item.remove');
-Route::get('/bulk/cart/remove/{id}', [CartController::class, 'removeBulkItem'])->name('bulk.cart.item.remove');
 
 Route::get('/checkout/order', [CartController::class, 'checkout'])->name('checkout.order');
-Route::get('/checkout/bulk/order', [CartController::class, 'checkoutBulkOrder'])->name('checkout.bulk.order');
 
 //Guest Order
 Route::get('/checkout-as-guest/order', [CartController::class, 'checkoutAsGust'])->name('checkout.as.guest.order');
 Route::post('/checkout-as-guest', [OrderController::class, 'placeGuestOrder'])->name('order.place.as.guest');
 Route::get('/order/success/guest/{order}/{password}', [OrderController::class, 'guestOrderSuccess'])->name('order.success.as.guest');
 
-//Bulk Guest Order
-Route::get('/checkout-as-guest-bulk/order', [CartController::class, 'checkoutAsGustBulk'])->name('checkout.as.guest.order.bulk');
-Route::post('/checkout-as-guest-bulk', [OrderController::class, 'placeGuestOrderBulk'])->name('order.place.as.guest.bulk');
-Route::get('/order/success/bulk/guest/{order}/{password}', [OrderController::class, 'guestBulkOrderSuccess'])->name('order.success.as.bulk.guest');
 
 //user login
 Route::get('/user/login', [UserController::class, 'userLogin'])->name('user.login');

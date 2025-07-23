@@ -96,17 +96,17 @@
                                                 <div class="product_content">
                                                     <div class="discount_price">
                                                         {{$product->sale_price}}
-                                                        TK.
+                                                        $.
                                                     </div>
                                                     <p class="line_through">
-                                                        {{$product->price}} TK.
+                                                        {{$product->price}} $.
                                                     </p>
                                                 </div>
                                             @else
                                                 <div class="product_content">
                                                     <div class="discount_price">
                                                         {{$product->price}}
-                                                        TK.
+                                                        $.
                                                     </div>
                                                 </div>
                                             @endif

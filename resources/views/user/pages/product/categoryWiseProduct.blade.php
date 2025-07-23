@@ -100,11 +100,11 @@
                             {{-- Price --}}
                             @if($product->sale_price)
                                 <div class="d-flex justify-content-center align-items-center gap-2">
-                                    <span class="fw-bold text-danger">{{ $product->sale_price }} TK</span>
-                                    <span class="text-muted text-decoration-line-through">{{ $product->price }} TK</span>
+                                    <span class="fw-bold text-danger">{{ $product->sale_price }} $</span>
+                                    <span class="text-muted text-decoration-line-through">{{ $product->price }} $</span>
                                 </div>
                             @else
-                                <div class="fw-bold text-dark">{{ $product->price }} TK</div>
+                                <div class="fw-bold text-dark">{{ $product->price }} $</div>
                             @endif
 
                             {{-- Add to Cart --}}
