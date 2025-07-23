@@ -62,6 +62,12 @@ class CartController extends Controller
             return view('user.pages.cart.cart', compact('cart'));
         }
 
+        public function userCartProduct()
+        {
+            //dd('This is user cart product page.');
+            return view('user.pages.userProductCart.userProductCart');
+        }
+
 
         public function updateCart(Request $request)
         {

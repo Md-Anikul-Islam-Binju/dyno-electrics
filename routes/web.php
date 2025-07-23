@@ -2,10 +2,8 @@
 
 use App\Http\Controllers\admin\AdminDashboardController;
 use App\Http\Controllers\admin\BrandController;
-use App\Http\Controllers\admin\BulkOrderManageController;
+
 use App\Http\Controllers\admin\CategoryController;
-use App\Http\Controllers\admin\CustomizeProductController;
-use App\Http\Controllers\admin\ManufactureController;
 use App\Http\Controllers\admin\OrderManageController;
 use App\Http\Controllers\admin\OtherSettingController;
 use App\Http\Controllers\admin\PartnerController;
@@ -13,7 +11,6 @@ use App\Http\Controllers\admin\ProductController;
 use App\Http\Controllers\admin\SiteSettingController;
 use App\Http\Controllers\admin\SizeController;
 use App\Http\Controllers\admin\SliderController;
-use App\Http\Controllers\admin\SubCategoryController;
 use App\Http\Controllers\admin\UserMessageManageController;
 use App\Http\Controllers\frontend\CartController;
 use App\Http\Controllers\frontend\ContactUsController;
@@ -40,20 +37,21 @@ Route::get('/custom-product-details/{id}', [ProductManageController::class, 'cus
 Route::get('/all-product/{category?}', [ProductManageController::class, 'allProducts'])->name('frontend.all.product');
 Route::get('/search-suggestions', [ProductManageController::class, 'searchSuggestions'])->name('frontend.search.suggestions');
 
-Route::get('/{slug?}', [ProductManageController::class, 'categoryWiseProduct'])->name('category.wise.product');
 
 //Add to Cart & Cart Page show
 Route::post('/cart/add', [CartController::class, 'addToCart'])->name('cart.add');
-Route::post('/cart/add/bulk/order', [CartController::class, 'addToCartBulkOrder'])->name('cart.add.bulk.order');
 
-Route::get('/cart', [CartController::class, 'showCart'])->name('cart.show');
+Route::get('/cart',[CartController::class,'showCart'])->name('cart.show');
 
+Route::get('/user-cart-product/{id}', [CartController::class, 'userCartProduct'])->name('user.cart.product');
 
 Route::post('/cart/update', [CartController::class, 'updateCart'])->name('cart.update');
 
 Route::get('/cart/remove/{id}', [CartController::class, 'removeItem'])->name('cart.item.remove');
 
 Route::get('/checkout/order', [CartController::class, 'checkout'])->name('checkout.order');
+
+
 
 //Guest Order
 Route::get('/checkout-as-guest/order', [CartController::class, 'checkoutAsGust'])->name('checkout.as.guest.order');
@@ -206,4 +204,8 @@ Route::middleware(['auth'])->group(function () {
 
     });
 });
+
+
 require __DIR__.'/auth.php';
+Route::get('/{slug?}', [ProductManageController::class, 'categoryWiseProduct'])
+    ->name('category.wise.product');
