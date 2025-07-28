@@ -20,7 +20,7 @@
 						<h1>Congratulations! You'r order is success</h1>
 						<div class="content">
 							<p>Your order number Tracking no <strong>{{ $order->order_tracking_id }}</strong>.</p>
-							<p>Total Amount: <strong>{{ $order->total }}</strong>৳</p>
+							<p>Total Amount: <strong>{{ $order->total }}</strong>$</p>
 						</div>
 						<a href="{{ url('/') }}" class="btn_style">Continue Shopping</a>
 					</div>

@@ -20,7 +20,7 @@
                 <h1>Congratulations! Your order is successful</h1>
                 <div class="content">
                     <p>Your order number Tracking no <strong>{{ $order->order_tracking_id }}</strong>.</p>
-                    <p>Total Amount: <strong>{{ $order->total }}</strong>৳</p>
+                    <p>Total Amount: <strong>{{ $order->total }}</strong>$</p>
                     <p>Your User: <strong>{{ $user->email }}</strong></p>
                     <p>Your Password: <strong>{{ $password }}</strong></p>
                 </div>

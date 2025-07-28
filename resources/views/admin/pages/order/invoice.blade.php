@@ -20,11 +20,13 @@
     <div class="col-12">
         <div class="card">
             <div class="card-body">
-
+                @php
+                $siteSetting = \App\Models\SiteSetting::first();
+                @endphp
                 <!-- Invoice Logo-->
                 <div class="clearfix">
                     <div class="float-start mb-3">
-                        <img src="{{URL::to('backend/images/wings.png')}}" alt="dark logo" height="22">
+                        <img src="{{URL::to($siteSetting->logo ? $siteSetting->logo:'')}}" alt="dark logo" height="22">
                     </div>
                     <div class="float-end">
                         <h4 class="m-0 d-print-none">Invoice</h4>
