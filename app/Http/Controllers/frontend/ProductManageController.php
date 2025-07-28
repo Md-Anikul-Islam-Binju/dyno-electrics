@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\frontend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Brand;
 use App\Models\Category;
 use App\Models\CustomizeProduct;
 use App\Models\Product;
@@ -104,23 +105,6 @@ class ProductManageController extends Controller
     }
 
 
-//    public function categoryWiseProduct(Request $request, $slug = null)
-//    {
-//        if (!$slug) {
-//            abort(404, 'Category not found');
-//        }
-//        $category = Category::where('slug', $slug)
-//            ->orWhere('id', $slug) // optional: allow ID-based access
-//            ->firstOrFail();
-//
-//        $products = Product::where('category_id', $category->id)
-//            ->with('category', 'brand', 'specifications')
-//            ->where('status', 1)
-//            ->paginate(12);
-//
-//        return view('user.pages.product.categoryWiseProduct', compact('products', 'slug'));
-//    }
-
     public function categoryWiseProduct(Request $request, $slug = null)
     {
         if (!$slug) {
@@ -148,6 +132,55 @@ class ProductManageController extends Controller
         $products = $query->paginate(20);
 
         return view('user.pages.product.categoryWiseProduct', compact('products', 'slug'));
+    }
+
+
+
+    public function searchProduct(Request $request)
+    {
+        // Load filters
+        $categories = Category::all();
+        $brands = Brand::all();
+
+        // Start building query
+        $products = Product::query()->with(['category', 'brand', 'specifications']);
+
+        // Filter: category
+        if ($request->filled('category_id')) {
+            $products->where('category_id', $request->category_id);
+        }
+
+        // Filter: brand
+        if ($request->filled('brand_id')) {
+            $products->where('brand_id', $request->brand_id);
+        }
+
+        // Filter: model number
+        if ($request->filled('model_no')) {
+            $products->where('model_no', 'like', '%' . $request->model_no . '%');
+        }
+
+        // Filter: Volt from specifications
+        if ($request->filled('volt')) {
+            $products->whereHas('specifications', function ($query) use ($request) {
+                $query->where('title', 'Volt')
+                    ->where('value', $request->volt);
+            });
+        }
+
+        // Filter: KW from specifications
+        if ($request->filled('kw')) {
+            $products->whereHas('specifications', function ($query) use ($request) {
+                $query->where('title', 'KW')
+                    ->where('value', $request->kw);
+            });
+        }
+
+        // Only show products if any filter is used
+        $filtered = $request->filled('category_id') || $request->filled('brand_id') || $request->filled('model_no') || $request->filled('volt') || $request->filled('kw');
+        $products = $filtered ? $products->get() : collect();
+
+        return view('user.pages.product.productSearch', compact('products', 'categories', 'brands'));
     }
 
 

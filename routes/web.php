@@ -88,7 +88,7 @@ Route::post('/wishlist/toggle', [WishlistController::class, 'toggleWishlist'])->
 Route::get('/wishlist', [WishlistController::class, 'wishlist'])->name('wishlist');
 //customized product
 Route::get('/bulk-product', [ProductManageController::class, 'bulkProduct'])->name('frontend.bulk.product');
-
+Route::get('/product-search', [ProductManageController::class, 'searchProduct'])->name('product.search');
 
 Route::middleware(['auth'])->group(function () {
     Route::middleware(['admin'])->prefix('admin')->group(function () {

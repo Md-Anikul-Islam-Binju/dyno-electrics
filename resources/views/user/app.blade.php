@@ -113,6 +113,9 @@
                 <li class="nav-item">
                     <a class="nav-link active" href="/">Home</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="{{route('product.search')}}">Product search</a>
+                </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Shop</a>
                     <ul class="dropdown-menu">

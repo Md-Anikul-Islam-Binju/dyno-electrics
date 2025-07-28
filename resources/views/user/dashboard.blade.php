@@ -233,8 +233,6 @@
     </div>
 
 
-
-
     <!-- Kit Partner -->
     <section class="kit_partner_wrapper">
         <div class="container">
