@@ -77,8 +77,8 @@
 													{{ $item->product->name }}
 												</td>
 												<td>{{$item->quantity}}</td>
-												<td>{{$item->price}}</td>
-												<td class="text-end">{{$item->price * $item->quantity}}</td>
+												<td>{{$item->price}}$</td>
+												<td class="text-end">{{$item->price * $item->quantity}}$</td>
 											</tr>
 											@endforeach
 
@@ -102,8 +102,8 @@
 							</div>
 							<div class="col-sm-6">
 								<div class="float-end mt-3 mt-sm-0">
-									<p><b>Sub-total:</b> <span class="float-end">{{$order->total - $order->delivery_charge}}Tk</span></p>
-									<h3>{{$order->total}}Tk</h3>
+									<p><b>Sub-total:</b> <span class="float-end">{{$order->total - $order->delivery_charge}}$</span></p>
+									<h3>{{$order->total}}$</h3>
 								</div>
 								<div class="clearfix"></div>
 							</div>

@@ -181,7 +181,6 @@ Route::middleware(['auth'])->group(function () {
 
 
        Route::post('/checkout', [OrderController::class, 'placeOrder'])->name('order.place');
-        Route::post('/checkout-bulk', [OrderController::class, 'bulkOrderPlace'])->name('bulk.order.place');
 
        Route::get('/order/success/{order}', [OrderController::class, 'success'])->name('order.success');
        Route::get('/bulk/order/success/{order}', [OrderController::class, 'successBulk'])->name('bulk.order.success');

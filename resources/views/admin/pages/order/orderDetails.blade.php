@@ -86,8 +86,8 @@
                                             <span class="badge bg-soft-info text-info">Online Payment</span>
                                         @endif
                                      </td>
-                                    <td>{{$order->delivery_charge}} Tk</td>
-                                    <td>{{$order->total}} Tk</td>
+                                    <td>{{$order->delivery_charge}} $</td>
+                                    <td>{{$order->total}} $</td>
                                      <td>
                                         @if($order->status == 'pending')
                                           <span style="color: blue">Pending</span>
@@ -123,7 +123,6 @@
                                 <th scope="col">Image</th>
                                 <th scope="col">Product Name</th>
                                 <th scope="col">Product Qty</th>
-                                <th scope="col">Product Size</th>
                                 <th scope="col">Per Qty Price</th>
                                 <th scope="col">Total  Price</th>
                             </tr>
@@ -139,9 +138,8 @@
                                   <td><img src="{{ asset('images/product/' . $firstImage) }}" alt="Product Image" style="width: 50px; height: 50px;"></td>
                                   <td>{{ $item->product->name }}</td>
                                   <td>{{ $item->quantity }}</td>
-                                  <td>{{ $item->size }}</td>
-                                  <td>{{ $item->price }}</td>
-                                  <td>{{ $item->price * $item->quantity }}</td>
+                                  <td>{{ $item->price }}$</td>
+                                  <td>{{ $item->price * $item->quantity }}$</td>
                               </tr>
                           @endforeach
                         </tbody>

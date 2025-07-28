@@ -36,7 +36,7 @@
                             <td>{{$key+1}}</td>
                             <td>{{$ordersData->invoice_no}}</td>
                             <td>{{$ordersData->user->name}}</td>
-                            <td>{{$ordersData->total}}</td>
+                            <td>{{$ordersData->total}}$</td>
                             <td>
                                 @if($ordersData->status == 'pending')
                                   <span style="color: blue">Pending</span>

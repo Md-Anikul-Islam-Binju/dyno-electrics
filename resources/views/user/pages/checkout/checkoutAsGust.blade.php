@@ -66,21 +66,21 @@
                                             </p>
                                             <label class="radio-inline">
                                                 <input type="radio" name="delivery_charge" value="60" onclick="updateShippingFee()" checked />
-                                                Inside Dhaka - 60৳
+                                                Inside State - 60$
                                             </label>
 
                                             <br />
 
                                             <label class="radio-inline">
                                                 <input type="radio" name="delivery_charge" value="120" onclick="updateShippingFee()" />
-                                                Outside Dhaka - 120৳
+                                                Outside State - 120$
                                             </label>
                                             <br />
-{{--                                            <label class="radio-inline">--}}
-{{--                                                <input type="radio" name="delivery_charge" value="0" onclick="updateShippingFee()" />--}}
-{{--                                               Free Delivery--}}
-{{--                                            </label>--}}
-{{--                                            <br />--}}
+                                            <label class="radio-inline">
+                                                <input type="radio" name="delivery_charge" value="0" onclick="updateShippingFee()" />
+                                               Free Delivery
+                                            </label>
+                                            <br />
                                         </div>
                                     </div>
                                     <div class="col-md-12 col-sm-12 details-section-wrap">
@@ -128,14 +128,14 @@
                                                                 <div class="options"></div>
                                                             </td>
                                                             <td class="price">
-                                                                <span>{{ $item['price'] }}৳</span>
+                                                                <span>{{ $item['price'] }}$</span>
                                                                 <span>
                                                                 x
                                                             </span>
                                                                 <span>{{ $item['qty'] }}</span>
                                                             </td>
                                                             <td class="price text-end">
-                                                                {{ $item['price'] * $item['qty'] }} ৳
+                                                                {{ $item['price'] * $item['qty'] }} $
                                                             </td>
                                                         </tr>
                                                     @endforeach
@@ -144,7 +144,7 @@
                                                             <strong>Sub-Total:</strong>
                                                         </td>
                                                         <td class="text-end">
-                                                            <span class="amount">{{$subTotal}}৳</span>
+                                                            <span class="amount">{{$subTotal}}$</span>
                                                         </td>
                                                     </tr>
                                                     <tr class="total">
@@ -161,7 +161,7 @@
                                                             <strong>Total:</strong>
                                                         </td>
                                                         <td class="text-end">
-                                                            <span class="amount" id="totalAmount">{{$subTotal+60}}৳</span>
+                                                            <span class="amount" id="totalAmount">{{$subTotal+60}}$</span>
                                                         </td>
                                                     </tr>
                                                     </tbody>
@@ -199,8 +199,8 @@
             // Calculate the total amount
             var totalAmount = subTotal + shippingFee;
             // Update the shipping fee display with currency symbol
-            document.getElementById('shippingFee').innerText = shippingFee + '৳';
-            document.getElementById('totalAmount').innerText = totalAmount + '৳';
+            document.getElementById('shippingFee').innerText = shippingFee + '$';
+            document.getElementById('totalAmount').innerText = totalAmount + '$';
         }
         // Initialize the default shipping fee on page load
         window.onload = function() {

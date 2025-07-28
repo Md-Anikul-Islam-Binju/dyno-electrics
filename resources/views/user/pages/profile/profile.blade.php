@@ -136,7 +136,7 @@
                                             </a>
                                         </div>
                                     </div>
-                                    <div class="amount">{{$orderData->price*$orderData->quantity}}৳</div>
+                                    <div class="amount">{{$orderData->price*$orderData->quantity}}$</div>
                                 </div>
                                  @endforeach
                             </div>
