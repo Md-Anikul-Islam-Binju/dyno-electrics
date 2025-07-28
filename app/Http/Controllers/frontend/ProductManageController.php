@@ -104,6 +104,23 @@ class ProductManageController extends Controller
     }
 
 
+//    public function categoryWiseProduct(Request $request, $slug = null)
+//    {
+//        if (!$slug) {
+//            abort(404, 'Category not found');
+//        }
+//        $category = Category::where('slug', $slug)
+//            ->orWhere('id', $slug) // optional: allow ID-based access
+//            ->firstOrFail();
+//
+//        $products = Product::where('category_id', $category->id)
+//            ->with('category', 'brand', 'specifications')
+//            ->where('status', 1)
+//            ->paginate(12);
+//
+//        return view('user.pages.product.categoryWiseProduct', compact('products', 'slug'));
+//    }
+
     public function categoryWiseProduct(Request $request, $slug = null)
     {
         if (!$slug) {
@@ -111,13 +128,24 @@ class ProductManageController extends Controller
         }
 
         $category = Category::where('slug', $slug)
-            ->orWhere('id', $slug) // optional: allow ID-based access
+            ->orWhere('id', $slug)
             ->firstOrFail();
 
+        $query = Product::where('category_id', $category->id)
+            ->with(['category', 'brand', 'specifications'])
+            ->where('status', 1);
 
-        $products = Product::where('category_id', $category->id)
-            ->where('status', 1)
-            ->paginate(12);
+        // Voltage filter using ProductSpecification
+        if ($request->has('voltage') && is_array($request->voltage)) {
+            $voltages = $request->voltage;
+
+            $query->whereHas('specifications', function ($q) use ($voltages) {
+                $q->where('title', 'Volt')
+                    ->whereIn('value', $voltages);
+            });
+        }
+
+        $products = $query->paginate(20);
 
         return view('user.pages.product.categoryWiseProduct', compact('products', 'slug'));
     }
